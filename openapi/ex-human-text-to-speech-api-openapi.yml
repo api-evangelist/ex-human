@@ -1,0 +1,151 @@
+openapi: 3.1.0
+info:
+  title: Ex-Human animations Text to Speech API
+  description: '# Ex-Human
+
+
+    Ex-Human is a chatbot that can talk to you like a human.
+
+
+    Currently we host several services here:
+
+
+    - Chatbot (for B2B clients)
+
+    - Chat images manager (image generation for chats)
+
+    - Admin service (adding and deactivating B2B clients, checking stats)
+
+    - Animations (lipsync, idle animation)
+
+    - Moderation (get various safety labels)
+
+    '
+  version: 0.1.0
+servers:
+- url: https://api.exh.ai
+  description: Production environment
+- url: http://localhost:7777
+  description: Local environment
+tags:
+- name: Text to Speech
+paths:
+  /tts/v1/generate_speech:
+    post:
+      tags:
+      - Text to Speech
+      summary: Generate Speech
+      description: Converts text into spoken audio and returns it as a streaming WAV audio file.
+      operationId: generate_speech_tts_v1_generate_speech_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: d704788b-c5bb-4117-9619-8307b91977a1
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TTSPayloadSchema'
+      responses:
+        '200':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    TTSFemaleVoiceName:
+      type: string
+      enum:
+      - Carolyn
+      - Betty
+      - Amelia
+      - Diana
+      - Erika
+      - Carol
+      - Amy
+      - Emily
+      - Dana
+      - Brenda
+      title: Female Voice Name
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TTSMaleVoiceName:
+      type: string
+      enum:
+      - Dale
+      - Arthur
+      - Ethan
+      - Bill
+      - Brent
+      - Daniel
+      - Chad
+      - Evan
+      - Colin
+      - Alan
+      - Andreessen
+      title: Male Voice Name
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    TTSPayloadSchema:
+      properties:
+        text:
+          type: string
+          minLength: 1
+          title: Text
+          description: Text to be spoken (Max length limit is 400. Contact support@exh.ai to request an increase)
+          examples:
+          - Hey there! I've been watching a movie!
+        voice_name:
+          anyOf:
+          - $ref: '#/components/schemas/TTSMaleVoiceName'
+          - $ref: '#/components/schemas/TTSFemaleVoiceName'
+          title: Voice Name
+          description: The voice name
+          default: Carolyn
+          examples:
+          - Carolyn
+      type: object
+      required:
+      - text
+      title: TTSPayloadSchema
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

@@ -1,0 +1,515 @@
+openapi: 3.1.0
+info:
+  title: Ex-Human animations API
+  description: '# Ex-Human
+
+
+    Ex-Human is a chatbot that can talk to you like a human.
+
+
+    Currently we host several services here:
+
+
+    - Chatbot (for B2B clients)
+
+    - Chat images manager (image generation for chats)
+
+    - Admin service (adding and deactivating B2B clients, checking stats)
+
+    - Animations (lipsync, idle animation)
+
+    - Moderation (get various safety labels)
+
+    '
+  version: 0.1.0
+servers:
+- url: https://api.exh.ai
+  description: Production environment
+- url: http://localhost:7777
+  description: Local environment
+tags:
+- name: animations
+paths:
+  /animations/v3/create_bot:
+    post:
+      tags:
+      - animations
+      summary: Create Idle Animation
+      description: Takes an image as input and returns a link to a video with an animated AI Human, which is called `idle_url`.
+      operationId: create_bot_v3_animations_v3_create_bot_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: 43c6fbf2-f648-4a59-becb-723f9a69f649
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_create_bot_v3_animations_v3_create_bot_post'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdleAnimationResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /animations/v3/generate_lipsync:
+    post:
+      tags:
+      - animations
+      summary: Get Talking Head Video from Text
+      description: Generates a lip-synced video of an AI Human speaking the text.
+      operationId: generate_lipsync_v3_animations_v3_generate_lipsync_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: 7f91ad87-7a88-4e72-ba17-c6a743261bcb
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TalkingHeadsPayloadSchema'
+      responses:
+        '200':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /animations/v3/generate_lipsync_from_audio:
+    post:
+      tags:
+      - animations
+      summary: Get Talking Head Video from Audio
+      description: Generates a lip-synced video of an AI Human from mp3 or wav audio file.
+      operationId: generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: ee062afb-707a-4957-b57a-69baf8c6e635
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post'
+      responses:
+        '200':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /animations/v3/jobs:
+    post:
+      tags:
+      - animations
+      summary: Create Animation Job
+      description: Generates an animation from a base64 encoded image and a prompt. Returns a task_id that can be used to poll for the animation status.
+      operationId: create_animation_job_animations_v3_jobs_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnimationPayloadSchema'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnimationTaskResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /animations/v3/jobs/{task_id}:
+    get:
+      tags:
+      - animations
+      summary: Get Animation Job
+      description: Get the current status of an animation task.
+      operationId: get_animation_job_animations_v3_jobs__task_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: task_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Task Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnimationStatusResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /animations/v3/prolong_jobs:
+    post:
+      tags:
+      - animations
+      summary: Create Prolong Animation Job
+      description: Prolongs an existing video using a source video URL and a prompt. Returns a task_id that can be used to poll for the animation status.
+      operationId: create_prolong_animation_job_animations_v3_prolong_jobs_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnimationProlongPayloadSchema'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnimationTaskResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    AnimationTaskResponseSchema:
+      properties:
+        task_id:
+          type: string
+          title: Task Id
+          description: Unique task identifier for the animation
+        message:
+          type: string
+          title: Message
+          description: Confirmation message
+          default: Animation task submitted successfully
+      type: object
+      required:
+      - task_id
+      title: AnimationTaskResponseSchema
+    AnimationPayloadSchema:
+      properties:
+        animation_model:
+          $ref: '#/components/schemas/AnimationModel'
+          description: 'Animation model to use:
+
+            - `aura` (480p) - animations with sound
+
+            - `aura_pro` (720p) - high-quality animations with sound'
+          default: aura
+        duration:
+          $ref: '#/components/schemas/AnimationDuration'
+          description: Duration of the animation
+          default: 5
+        image_b64:
+          type: string
+          title: Image B64
+          description: Base64 encoded image to animate
+        prompt:
+          type: string
+          maxLength: 1000
+          minLength: 2
+          title: Prompt
+          description: Prompt for the animation
+      type: object
+      required:
+      - image_b64
+      - prompt
+      title: AnimationPayloadSchema
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AnimationStatusResponseSchema:
+      properties:
+        status:
+          $ref: '#/components/schemas/VideoGenerationStatusEnum'
+          description: Current status of the animation task
+        video_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Video Url
+          description: URL to the generated animation video (if completed)
+        error_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Message
+          description: Error message (if failed)
+      type: object
+      required:
+      - status
+      title: AnimationStatusResponseSchema
+    TalkingHeadsPayloadSchema:
+      properties:
+        text:
+          type: string
+          minLength: 1
+          title: Text
+          description: Text to be spoken (Max length limit is 200. Contact support@exh.ai to request an increase)
+          examples:
+          - Hey there! I've been watching a movie!
+        idle_url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Idle Url
+          description: Idle animation url (generate with /animations/v3/create_bot)
+          examples:
+          - https://pub-bc12eec5b78e405bb665c9b3cec6c16f.r2.dev/est_38a0f1d3751a4b350fe0eb69f8d189c3.mp4
+        voice_name:
+          anyOf:
+          - $ref: '#/components/schemas/MaleVoiceName'
+          - $ref: '#/components/schemas/FemaleVoiceName'
+          title: Voice Name
+          description: The voice name
+          examples:
+          - Marc
+        azure_voice:
+          title: Azure Voice
+          description: The azure voice (https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=tts)
+          examples:
+          - en-US-AmberNeural
+          type: string
+          pattern: '[a-z]{2}-[A-Z]{2}-\w+'
+          default: null
+          nullable: true
+        azure_style:
+          title: Azure Style
+          description: The azure voice style (https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=tts#voice-styles-and-roles)
+          type: string
+          minLength: 1
+          default: null
+          nullable: true
+      type: object
+      required:
+      - text
+      - idle_url
+      title: TalkingHeadsPayloadSchema
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AnimationProlongPayloadSchema:
+      properties:
+        animation_model:
+          $ref: '#/components/schemas/AnimationModel'
+          description: 'Animation model to use:
+
+            - `aura` (480p) - animations with sound
+
+            - `aura_pro` (720p) - high-quality animations with sound'
+          default: aura
+        duration:
+          $ref: '#/components/schemas/AnimationDuration'
+          description: Duration of the animation
+          default: 5
+        video_url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Video Url
+          description: URL of the source video to prolong
+        prompt:
+          anyOf:
+          - type: string
+            maxLength: 1000
+            minLength: 2
+          - type: 'null'
+          title: Prompt
+          description: Prompt for the prolongation
+      type: object
+      required:
+      - video_url
+      title: AnimationProlongPayloadSchema
+    IdleAnimationResponseSchema:
+      properties:
+        idle_url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Idle Url
+          description: This parameter provides a link to an animation featuring the bot. It is essential for generating animated responses based on text input. Also you can use this video in your application to display when your bot is waiting for requests
+          examples:
+          - https://pub-bc12eec5b78e405bb665c9b3cec6c16f.r2.dev/fb7c3aee30a5699fcc5d5e5786a6ae51.mp4
+        image_url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Image Url
+          description: This is a link to the bot's avatar. You can use it in your application as a preview image for the bot.
+          examples:
+          - https://pub-bc12eec5b78e405bb665c9b3cec6c16f.r2.dev/fb7c3aee30a5699fcc5d5e5786a6ae51.jpg
+      type: object
+      required:
+      - idle_url
+      - image_url
+      title: IdleAnimationResponseSchema
+    AnimationDuration:
+      type: integer
+      enum:
+      - 5
+      - 10
+      title: AnimationDuration
+    Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post:
+      properties:
+        idle_url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Idle Url
+          description: Idle animation url (generate with /animations/v3/create_bot)
+        audio_file:
+          type: string
+          format: binary
+          title: Audio File
+          description: Audio file in mp3 or wav format with specified mime type. Max audio duration is 15 seconds. Contact support@exh.ai to request an increase.
+      type: object
+      required:
+      - idle_url
+      - audio_file
+      title: Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post
+    VideoGenerationStatusEnum:
+      type: string
+      enum:
+      - pending
+      - completed
+      - error
+      title: VideoGenerationStatusEnum
+    Body_create_bot_v3_animations_v3_create_bot_post:
+      properties:
+        image:
+          type: string
+          format: binary
+          title: Image
+      type: object
+      required:
+      - image
+      title: Body_create_bot_v3_animations_v3_create_bot_post
+    AnimationModel:
+      type: string
+      enum:
+      - aura
+      - aura_pro
+      title: AnimationModel
+    FemaleVoiceName:
+      type: string
+      enum:
+      - Fiona
+      - Flora
+      - Freya
+      - Fay
+      - Felicia
+      - Franchesca
+      - Falon
+      - Faryn
+      - Frida
+      - Jenny
+      - Cleopatra
+      - Elfess
+      - Mermaid
+      - Ayra
+      - Freeza
+      - Ayumi
+      - Cardelia
+      - Islanda
+      - Seraphina
+      - Aria
+      - Joanne_11labs
+      - Sally_11labs
+      - Suzanne_11labs
+      title: FemaleVoiceName
+    MaleVoiceName:
+      type: string
+      enum:
+      - Miguel
+      - Mustafa
+      - Marc
+      - Mike
+      - Max
+      - Mason
+      - Marco
+      - Mikael
+      - Myles
+      - Elon
+      - Vampire
+      - Samurai
+      - Kan
+      - Jeremy
+      - Joel
+      - Neil_11labs
+      - Markus_11labs
+      - Milo_11labs
+      title: MaleVoiceName
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

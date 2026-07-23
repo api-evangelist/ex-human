@@ -1,0 +1,252 @@
+openapi: 3.1.0
+info:
+  title: Ex-Human animations Image Generation API
+  description: '# Ex-Human
+
+
+    Ex-Human is a chatbot that can talk to you like a human.
+
+
+    Currently we host several services here:
+
+
+    - Chatbot (for B2B clients)
+
+    - Chat images manager (image generation for chats)
+
+    - Admin service (adding and deactivating B2B clients, checking stats)
+
+    - Animations (lipsync, idle animation)
+
+    - Moderation (get various safety labels)
+
+    '
+  version: 0.1.0
+servers:
+- url: https://api.exh.ai
+  description: Production environment
+- url: http://localhost:7777
+  description: Local environment
+tags:
+- name: Image Generation
+paths:
+  /image/v1/generate_gallery_image:
+    post:
+      tags:
+      - Image Generation
+      summary: Generate Gallery Image
+      description: 'Creates a personalized gallery-style image based on an identity image and a descriptive prompt.
+
+
+        It is ideal for generating visually appealing images with particular human identity
+
+        that align with specific themes or contexts, making it suitable
+
+        for applications like personalized marketing, content creation, and more.'
+      operationId: generate_gallery_image_image_v1_generate_gallery_image_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: ae00ea02-0778-4a47-9bd2-47b50befc18b
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GalleryImageRequestSchema'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GalleryImageResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /image/v1/generate_avatar:
+    post:
+      tags:
+      - Image Generation
+      summary: Generate Avatar
+      description: 'Produces a personalized avatar image based on a textual description provided by the user.
+
+
+        It is ideal for creating unique profile pictures, characters for games,
+
+        or digital representations for various applications.'
+      operationId: generate_avatar_image_v1_generate_avatar_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: 239a01b4-0862-4ca9-bd35-e26bfa969b6b
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AvatarRequestSchema'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvatarResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    GalleryImageResponseSchema:
+      properties:
+        image_b64:
+          type: string
+          title: Image B64
+          description: Image encoded in Base64 format
+        contains_nsfw:
+          type: boolean
+          title: Contains Nsfw
+          description: Flag indicating if the image contains NSFW content
+      type: object
+      required:
+      - image_b64
+      - contains_nsfw
+      title: GalleryImageResponseSchema
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AvatarRequestSchema:
+      properties:
+        prompt:
+          type: string
+          title: Prompt
+          description: Character description to generate avatar with.
+          examples:
+          - cyber woman with pink hair and tattoos
+        nsfw_policy:
+          $ref: '#/components/schemas/NSFWPolicyAvatar'
+          default: filter
+      type: object
+      required:
+      - prompt
+      title: AvatarRequestSchema
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ImageGenerationModel:
+      type: string
+      enum:
+      - persona-2
+      title: ImageGenerationModel
+      description: Model to use for image generation.
+    NSFWPolicy:
+      type: string
+      enum:
+      - filter
+      - allow
+      title: NSFWPolicy
+      description: Policy for handling NSFW content.
+    AvatarResponseSchema:
+      properties:
+        image_b64:
+          type: string
+          title: Image B64
+          description: Generated avatar image as base64 string.
+      type: object
+      required:
+      - image_b64
+      title: AvatarResponseSchema
+    ImageStyle:
+      type: string
+      enum:
+      - realistic
+      - anime
+      title: ImageStyle
+      description: 'Artistic style for generating the gallery image.
+
+        If not specified, the style is automatically detected based on the identity image.'
+    NSFWPolicyAvatar:
+      type: string
+      enum:
+      - filter
+      - allow
+      title: NSFWPolicyAvatar
+      description: Policy for handling NSFW results. When NSFW images are filtered - an error with code 535 is returned.
+    GalleryImageRequestSchema:
+      properties:
+        identity_image_b64:
+          type: string
+          title: Identity Image B64
+          description: Human appearance to generate image with as Base64 string.
+        prompt:
+          type: string
+          title: Prompt
+          description: Text prompt describing an image to generate.
+          examples:
+          - on the beach during sunset, smiling and holding a surfboard
+        model_name:
+          $ref: '#/components/schemas/ImageGenerationModel'
+          description: 'Image generation model to use:
+
+            - `persona-2` - next-gen model with improved identity preservation and higher fidelity output'
+          default: persona-2
+        style:
+          description: Artistic style for generating the gallery image.If not specified, the style is automatically detected based on the identity image.
+          $ref: '#/components/schemas/ImageStyle'
+          default: null
+          nullable: true
+        nsfw_policy:
+          $ref: '#/components/schemas/NSFWPolicy'
+          default: filter
+      type: object
+      required:
+      - identity_image_b64
+      - prompt
+      title: GalleryImageRequestSchema
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer
