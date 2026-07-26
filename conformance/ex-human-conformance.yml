@@ -1,0 +1,29 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/ex-human-openapi.yml
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: 'openapi: 3.1.0 spec published at docs.exh.ai'
+- id: http-bearer-auth
+  conforms: true
+  evidence: securitySchemes HTTPBearer (type http, scheme bearer) applied to all operations
+- id: oauth2
+  conforms: false
+  evidence: no oauth2 security scheme
+- id: oidc
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors use FastAPI HTTPValidationError (application/json), not application/problem+json
+- id: json-api
+  conforms: false
+- id: pagination
+  conforms: false
+  evidence: no paginated list endpoints
+- id: idempotency
+  conforms: false
+  evidence: no Idempotency-Key support documented
+- id: webhooks
+  conforms: false
+  evidence: no webhook/event surface; long-running work uses create-then-poll jobs

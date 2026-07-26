@@ -1,0 +1,34 @@
+# Ex-human Documentation
+
+> Documentation for Ex-human
+
+## API Reference
+- [Get Started with Ex-Human API](https://docs.exh.ai/reference/getting-started-with-your-api.md)
+- [Get Multimodal Chat Response](https://docs.exh.ai/reference/get_response_chatbot_v3_response_post.md): Multimodal chat response endpoint.  It can be used to support engaging conversations with both text and image responses.  For usage examples, see: https://docs.exh.ai/recipes/multimodal-chat
+- [Clear Long-Term Memory](https://docs.exh.ai/reference/delete_memory_chatbot_v3_memory_delete.md)
+- [Get Long-Term Memory](https://docs.exh.ai/reference/get_memory_chatbot_v3_memory_get.md): Retrieves the long-term memory for a chat. Note: - Memory is only available when both bot_profile.id and user_profile.id are present - Memory is only collected when chat_settings.enable_memory is True in chat requests - Memory starts accumulating only after 20 messages in a chat
+- [Get Smart Replies](https://docs.exh.ai/reference/get_smart_replies_chatbot_v2_get_smart_replies_post.md): Smart reply endpoint.  Use it to get possible user responses for the current dialog context. They can be served as a  help for the user on how to continue the conversation.
+- [Create Idle Animation](https://docs.exh.ai/reference/create_bot_v3_animations_v3_create_bot_post.md): Takes an image as input and returns a link to a video with an animated AI Human, which is called `idle_url`.
+- [Get Talking Head Video from Text](https://docs.exh.ai/reference/generate_lipsync_v3_animations_v3_generate_lipsync_post.md): Generates a lip-synced video of an AI Human speaking the text.
+- [Get Talking Head Video from Audio](https://docs.exh.ai/reference/generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post.md): Generates a lip-synced video of an AI Human from mp3 or wav audio file.
+- [Create Animation Job](https://docs.exh.ai/reference/create_animation_job_animations_v3_jobs_post.md): Generates an animation from a base64 encoded image and a prompt. Returns a task_id that can be used to poll for the animation status.
+- [Get Animation Job](https://docs.exh.ai/reference/get_animation_job_animations_v3_jobs__task_id__get.md): Get the current status of an animation task.
+- [Create Prolong Animation Job](https://docs.exh.ai/reference/create_prolong_animation_job_animations_v3_prolong_jobs_post.md): Prolongs an existing video using a source video URL and a prompt. Returns a task_id that can be used to poll for the animation status.
+- [Generate Speech](https://docs.exh.ai/reference/generate_speech_tts_v1_generate_speech_post.md): Converts text into spoken audio and returns it as a streaming WAV audio file.
+- [Generate Gallery Image](https://docs.exh.ai/reference/generate_gallery_image_image_v1_generate_gallery_image_post.md): Creates a personalized gallery-style image based on an identity image and a descriptive prompt.  It is ideal for generating visually appealing images with particular human identity that align with specific themes or contexts, making it suitable for applications like personalized marketing, content creation, and more.
+- [Generate Avatar](https://docs.exh.ai/reference/generate_avatar_image_v1_generate_avatar_post.md): Produces a personalized avatar image based on a textual description provided by the user.  It is ideal for creating unique profile pictures, characters for games, or digital representations for various applications.
+
+## Recipes
+- [Animate Image](https://docs.exh.ai/recipes/animate-image.md)
+- [Text to Speech](https://docs.exh.ai/recipes/generate-audio-from-text.md)
+- [Talking Head](https://docs.exh.ai/recipes/integrate-talking-head.md)
+- [Talking Head with custom audio](https://docs.exh.ai/recipes/integrate-talking-heads-with-custom-audio-files.md)
+- [Multimodal Chat API](https://docs.exh.ai/recipes/multimodal-chat.md)
+- [Prolong Video](https://docs.exh.ai/recipes/prolong-video.md)
+
+## Changelog
+- [Added new persona-2 image generation model](https://docs.exh.ai/changelog/added-new-persona-2-image-generation-model.md)
+- [`instruct` model has been removed from the /chatbot/v3/response](https://docs.exh.ai/changelog/instruct-model-has-been-removed-from-the-chatbotv3response.md)
+- [Added new supreme image generation model](https://docs.exh.ai/changelog/added-new-supreme-image-generation-model.md)
+- [Removed base image generation model](https://docs.exh.ai/changelog/deprecated-base-image-generation-model.md)
+- [Added new B2B endpoints for image-to-video animation.](https://docs.exh.ai/changelog/added-new-b2b-endpoints-for-image-to-video-animation.md)

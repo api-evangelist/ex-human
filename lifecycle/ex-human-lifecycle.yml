@@ -1,0 +1,27 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.exh.ai/changelog
+versioning:
+  scheme: uri-path-per-service
+  current:
+    chatbot: v3
+    smart_replies: v2
+    animations: v3
+    tts: v1
+    image: v1
+changelog: https://docs.exh.ai/changelog
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No formal deprecation policy or RFC 8594 Sunset/Deprecation header support is published. Model
+    retirements are announced in the changelog and handled with backward-compatible auto-routing (removed
+    'instruct' chat model -> 'roleplay'; removed 'base' image model -> 'large').
+  retired_models:
+  - 'chat: instruct'
+  - 'image: base'
+sla:
+  url: null
+  notes: No public SLA/uptime target; Enterprise reliability is offered via the Enterprise plan (contact
+    support@exh.ai).
+status_page: null
+deprecated_operations: []

@@ -1,0 +1,28 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/ex-human-openapi.yml
+skills:
+- file: ex-human-companion-chat.md
+  name: Build a multimodal AI companion chat
+  api: openapi/ex-human-openapi.yml
+  operations:
+  - get_response_chatbot_v3_response_post
+  - get_smart_replies_chatbot_v2_get_smart_replies_post
+  - delete_memory_chatbot_v3_memory_delete
+- file: ex-human-talking-head-avatar.md
+  name: Generate a talking-head avatar video
+  api: openapi/ex-human-openapi.yml
+  operations:
+  - create_bot_v3_animations_v3_create_bot_post
+  - generate_lipsync_v3_animations_v3_generate_lipsync_post
+  - generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post
+  - generate_speech_tts_v1_generate_speech_post
+- file: ex-human-image-to-video.md
+  name: Animate an image into video (create-then-poll)
+  api: openapi/ex-human-openapi.yml
+  operations:
+  - generate_gallery_image_image_v1_generate_gallery_image_post
+  - generate_avatar_image_v1_generate_avatar_post
+  - create_animation_job_animations_v3_jobs_post
+  - get_animation_job_animations_v3_jobs__task_id__get
+  - create_prolong_animation_job_animations_v3_prolong_jobs_post

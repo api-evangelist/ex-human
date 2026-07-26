@@ -1,0 +1,38 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.exh.ai/changelog
+scheme: dated-entries
+notes: Ex-Human publishes a dated changelog on its docs site. Entries below are the recent window captured
+  from https://docs.exh.ai/changelog; model changes are backward-compatible (removed models auto-route
+  to a replacement).
+entries:
+- title: Added new persona-2 image generation model
+  breaking: false
+  additions: true
+  highlights: persona-2 next-gen model with improved identity preservation and higher fidelity output;
+    available in /image/v1/generate_gallery_image and /chatbot/v3/response. Appearance params are ignored
+    by this model.
+  url: https://docs.exh.ai/changelog/added-new-persona-2-image-generation-model
+- title: Added new supreme image generation model
+  breaking: false
+  additions: true
+  highlights: supreme model delivers hyper-realistic results with superior text rendering and minimal
+    artifacts; available in /image/v1/generate_gallery_image and /chatbot/v3/response.
+  url: https://docs.exh.ai/changelog/added-new-supreme-image-generation-model
+- title: Added new B2B endpoints for image-to-video animation
+  breaking: false
+  additions: true
+  highlights: New image-to-video animation endpoints and an Animate Image recipe.
+  url: https://docs.exh.ai/changelog/added-new-b2b-endpoints-for-image-to-video-animation
+- title: instruct model removed from /chatbot/v3/response
+  breaking: false
+  additions: false
+  highlights: The instruct chat model was removed; chat_settings.model_name 'instruct' is automatically
+    routed to 'roleplay'. No client action required.
+  url: https://docs.exh.ai/changelog/instruct-model-has-been-removed-from-the-chatbotv3response
+- title: Removed base image generation model
+  breaking: false
+  additions: false
+  highlights: The base image model was removed; requests with model_name 'base' are automatically converted
+    to the large model with improved quality.
+  url: https://docs.exh.ai/changelog/deprecated-base-image-generation-model

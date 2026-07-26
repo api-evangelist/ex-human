@@ -1,0 +1,20 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Ex-Human
+  version: 1.0.0
+extends: openapi/ex-human-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-19'
+    x-apievangelist-category:
+    - Conversational AI
+    - AI Companions
+    - Generative Media
+    x-api-evangelist-provider: ex-human
+- target: $.info
+  update:
+    x-authentication: authentication/ex-human-authentication.yml
+    x-conventions: conventions/ex-human-conventions.yml
+    x-errors: errors/ex-human-problem-types.yml
+    x-lifecycle: lifecycle/ex-human-lifecycle.yml

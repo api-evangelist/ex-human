@@ -1,8 +1,28 @@
 aid: ex-human
 name: Ex-Human
-description: Ex-Human is a company surfaced as a portfolio company of a16z and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: Ex-Human is a "Digital Human as a Service" platform that provides a single, unified API for
+  building fully immersive, emotionally intelligent AI companions that communicate through text, voice,
+  images, and video. Backed by a16z, the company lets developers design unique character personalities
+  and generate multimodal responses at production scale. The Ex-Human API spans a multimodal chatbot (roleplay
+  and realistic-chat models with long-term memory and smart replies), image generation (personalized gallery
+  images and avatars via the persona-2 and supreme models), talking-head avatar animation (lip-sync from
+  text or audio), image-to-video animation jobs, and text-to-speech. It is trusted by large consumer-technology
+  companies to power AI companions, entertainment and gaming NPCs, dating experiences, AI twins, education
+  tutors, and healthcare and therapy support at scale.
 url: https://raw.githubusercontent.com/api-evangelist/ex-human/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://exh.ai/Union512.png?v=2
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -11,12 +31,139 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Artificial Intelligence
+- Conversational AI
+- AI Companions
+- Generative AI
+- Text to Speech
+- Image Generation
+- Video Generation
+- Avatars
+- Multimodal
+apis:
+- aid: ex-human:ex-human-animations-api
+  name: Ex-Human animations API
+  description: The animations API from Ex-Human — 6 operation(s) for animations.
+  humanURL: https://docs.exh.ai/reference/getting-started-with-your-api
+  baseURL: https://api.exh.ai
+  tags:
+  - animations
+  properties:
+  - type: OpenAPI
+    url: openapi/ex-human-animations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exh.ai/
+  - type: APIReference
+    url: https://docs.exh.ai/reference/get_response_chatbot_v3_response_post
+  - type: GettingStarted
+    url: https://docs.exh.ai/reference/getting-started-with-your-api
+- aid: ex-human:ex-human-chatbot-api
+  name: Ex-Human chatbot API
+  description: The chatbot API from Ex-Human — 3 operation(s) for chatbot.
+  humanURL: https://docs.exh.ai/reference/getting-started-with-your-api
+  baseURL: https://api.exh.ai
+  tags:
+  - chatbot
+  properties:
+  - type: OpenAPI
+    url: openapi/ex-human-chatbot-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exh.ai/
+  - type: APIReference
+    url: https://docs.exh.ai/reference/get_response_chatbot_v3_response_post
+  - type: GettingStarted
+    url: https://docs.exh.ai/reference/getting-started-with-your-api
+- aid: ex-human:ex-human-image-generation-api
+  name: Ex-Human Image Generation API
+  description: The Image Generation API from Ex-Human — 2 operation(s) for image generation.
+  humanURL: https://docs.exh.ai/reference/getting-started-with-your-api
+  baseURL: https://api.exh.ai
+  tags:
+  - Image Generation
+  properties:
+  - type: OpenAPI
+    url: openapi/ex-human-image-generation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exh.ai/
+  - type: APIReference
+    url: https://docs.exh.ai/reference/get_response_chatbot_v3_response_post
+  - type: GettingStarted
+    url: https://docs.exh.ai/reference/getting-started-with-your-api
+- aid: ex-human:ex-human-text-to-speech-api
+  name: Ex-Human Text to Speech API
+  description: The Text to Speech API from Ex-Human — 1 operation(s) for text to speech.
+  humanURL: https://docs.exh.ai/reference/getting-started-with-your-api
+  baseURL: https://api.exh.ai
+  tags:
+  - Text to Speech
+  properties:
+  - type: OpenAPI
+    url: openapi/ex-human-text-to-speech-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exh.ai/
+  - type: APIReference
+    url: https://docs.exh.ai/reference/get_response_chatbot_v3_response_post
+  - type: GettingStarted
+    url: https://docs.exh.ai/reference/getting-started-with-your-api
+common:
+- type: DomainSecurity
+  url: security/ex-human-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/ex-human-agentic-access.yml
+- type: Authentication
+  url: authentication/ex-human-authentication.yml
+- type: DeveloperPortal
+  url: https://docs.exh.ai/
+- type: Documentation
+  url: https://docs.exh.ai/
+- type: APIReference
+  url: https://docs.exh.ai/reference/get_response_chatbot_v3_response_post
+- type: GettingStarted
+  url: https://docs.exh.ai/reference/getting-started-with-your-api
+- type: ChangeLog
+  url: https://docs.exh.ai/changelog
+- type: Pricing
+  url: https://exh.ai/#pricing
+- type: SignUp
+  url: https://admin.exh.ai/
+- type: Support
+  url: mailto:support@exh.ai
+- type: Blog
+  url: https://exh.ai/blog/
+- type: TermsOfService
+  url: https://www.privacypolicies.com/live/6e088827-d8ce-4369-bb65-6b0bd4a23146
+- type: PrivacyPolicy
+  url: https://www.privacypolicies.com/live/a9dd0844-8a81-48dc-bdef-f022e0ef4d4e
+- type: LinkedIn
+  url: https://www.linkedin.com/company/ex-human/
+- type: ErrorCatalog
+  url: errors/ex-human-problem-types.yml
+- type: Conventions
+  url: conventions/ex-human-conventions.yml
+- type: Lifecycle
+  url: lifecycle/ex-human-lifecycle.yml
+- type: Conformance
+  url: conformance/ex-human-conformance.yml
+- type: DataModel
+  url: data-model/ex-human-data-model.yml
+- type: MCPServer
+  url: mcp/ex-human-mcp.yml
+- type: LLMsTxt
+  url: llms/ex-human-llms.txt
+- type: ChangeLog
+  url: changelog/ex-human-changelog.yml
+- type: AgentSkill
+  url: skills/_index.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

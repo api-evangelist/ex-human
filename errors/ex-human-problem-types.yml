@@ -1,0 +1,22 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/ex-human-openapi.yml
+format: fastapi-validation
+notes: The Ex-Human API is a FastAPI service. Every operation documents a 422 Validation Error returning
+  HTTPValidationError (a `detail[]` array of ValidationError objects, each with loc/msg/type). No RFC
+  9457 application/problem+json envelope and no dedicated error-code registry are published; authentication
+  failures surface as standard HTTP 401/403 from the Bearer scheme.
+envelope:
+  media_type: application/json
+  schema: HTTPValidationError
+  fields:
+  - detail[].loc
+  - detail[].msg
+  - detail[].type
+problems:
+- status: 422
+  title: Validation Error
+  schema: HTTPValidationError
+  description: Request body or parameters failed validation; detail[] lists each offending field with
+    location, message, and error type.
+  applies_to: all operations

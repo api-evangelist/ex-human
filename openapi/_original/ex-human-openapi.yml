@@ -1,0 +1,1360 @@
+openapi: 3.1.0
+info:
+  title: Ex-Human
+  description: '# Ex-Human
+
+
+    Ex-Human is a chatbot that can talk to you like a human.
+
+
+    Currently we host several services here:
+
+
+    - Chatbot (for B2B clients)
+
+    - Chat images manager (image generation for chats)
+
+    - Admin service (adding and deactivating B2B clients, checking stats)
+
+    - Animations (lipsync, idle animation)
+
+    - Moderation (get various safety labels)
+
+    '
+  version: 0.1.0
+servers:
+- url: https://api.exh.ai
+  description: Production environment
+- url: http://localhost:7777
+  description: Local environment
+paths:
+  /chatbot/v3/response:
+    post:
+      tags:
+      - chatbot
+      summary: Get Multimodal Chat Response
+      description: 'Multimodal chat response endpoint.
+
+
+        It can be used to support engaging conversations with both text and image responses.
+
+
+        For usage examples, see: https://docs.exh.ai/recipes/multimodal-chat'
+      operationId: get_response_chatbot_v3_response_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: 16f19b16-b0c1-4c3c-8f14-a0f283dc93b9
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatbotV3PayloadSchema'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatbotV3ResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /chatbot/v2/get_smart_replies:
+    post:
+      tags:
+      - chatbot
+      summary: Get Smart Replies
+      description: "Smart reply endpoint.\n\nUse it to get possible user responses for the current dialog\
+        \ context. They can be served as a\n help for the user on how to continue the conversation."
+      operationId: get_smart_replies_chatbot_v2_get_smart_replies_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: 682decba-2b2c-4175-a1cc-d8b82623e60f
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SmartReplyPayloadSchema'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartReplyResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /chatbot/v3/memory:
+    delete:
+      tags:
+      - chatbot
+      summary: Clear Long-Term Memory
+      operationId: delete_memory_chatbot_v3_memory_delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: bot_id
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Bot Id
+        example: AD17F119-FC27-6400-566C
+      - name: user_id
+        in: query
+        required: true
+        schema:
+          type: string
+          title: User Id
+        example: PDS31104-FC27-6400-9DG2
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: 0d60bfb7-bda7-4cdb-8a43-572ab48e016b
+          title: X-Request-Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /animations/v3/create_bot:
+    post:
+      tags:
+      - animations
+      summary: Create Idle Animation
+      description: Takes an image as input and returns a link to a video with an animated AI Human, which
+        is called `idle_url`.
+      operationId: create_bot_v3_animations_v3_create_bot_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: 43c6fbf2-f648-4a59-becb-723f9a69f649
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_create_bot_v3_animations_v3_create_bot_post'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdleAnimationResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /animations/v3/generate_lipsync:
+    post:
+      tags:
+      - animations
+      summary: Get Talking Head Video from Text
+      description: Generates a lip-synced video of an AI Human speaking the text.
+      operationId: generate_lipsync_v3_animations_v3_generate_lipsync_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: 7f91ad87-7a88-4e72-ba17-c6a743261bcb
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TalkingHeadsPayloadSchema'
+      responses:
+        '200':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /animations/v3/generate_lipsync_from_audio:
+    post:
+      tags:
+      - animations
+      summary: Get Talking Head Video from Audio
+      description: Generates a lip-synced video of an AI Human from mp3 or wav audio file.
+      operationId: generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: ee062afb-707a-4957-b57a-69baf8c6e635
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post'
+      responses:
+        '200':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /animations/v3/jobs:
+    post:
+      tags:
+      - animations
+      summary: Create Animation Job
+      description: Generates an animation from a base64 encoded image and a prompt. Returns a task_id
+        that can be used to poll for the animation status.
+      operationId: create_animation_job_animations_v3_jobs_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnimationPayloadSchema'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnimationTaskResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /animations/v3/jobs/{task_id}:
+    get:
+      tags:
+      - animations
+      summary: Get Animation Job
+      description: Get the current status of an animation task.
+      operationId: get_animation_job_animations_v3_jobs__task_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: task_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Task Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnimationStatusResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /animations/v3/prolong_jobs:
+    post:
+      tags:
+      - animations
+      summary: Create Prolong Animation Job
+      description: Prolongs an existing video using a source video URL and a prompt. Returns a task_id
+        that can be used to poll for the animation status.
+      operationId: create_prolong_animation_job_animations_v3_prolong_jobs_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnimationProlongPayloadSchema'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnimationTaskResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /tts/v1/generate_speech:
+    post:
+      tags:
+      - Text to Speech
+      summary: Generate Speech
+      description: Converts text into spoken audio and returns it as a streaming WAV audio file.
+      operationId: generate_speech_tts_v1_generate_speech_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: d704788b-c5bb-4117-9619-8307b91977a1
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TTSPayloadSchema'
+      responses:
+        '200':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /image/v1/generate_gallery_image:
+    post:
+      tags:
+      - Image Generation
+      summary: Generate Gallery Image
+      description: 'Creates a personalized gallery-style image based on an identity image and a descriptive
+        prompt.
+
+
+        It is ideal for generating visually appealing images with particular human identity
+
+        that align with specific themes or contexts, making it suitable
+
+        for applications like personalized marketing, content creation, and more.'
+      operationId: generate_gallery_image_image_v1_generate_gallery_image_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: ae00ea02-0778-4a47-9bd2-47b50befc18b
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GalleryImageRequestSchema'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GalleryImageResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /image/v1/generate_avatar:
+    post:
+      tags:
+      - Image Generation
+      summary: Generate Avatar
+      description: 'Produces a personalized avatar image based on a textual description provided by the
+        user.
+
+
+        It is ideal for creating unique profile pictures, characters for games,
+
+        or digital representations for various applications.'
+      operationId: generate_avatar_image_v1_generate_avatar_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: X-Request-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: 239a01b4-0862-4ca9-bd35-e26bfa969b6b
+          title: X-Request-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AvatarRequestSchema'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvatarResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    CharacterProfile:
+      properties:
+        id:
+          title: Id
+          description: Unique identifier. Provide user's id and bot's id to enable Long-Term Memory -
+            recall of conversation beyond 30 messages
+          examples:
+          - '1234567890'
+          type: string
+          maxLength: 256
+          minLength: 1
+          default: null
+          nullable: true
+        name:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: Name
+          examples:
+          - Sam
+        description:
+          title: Description
+          description: Detailed description of your character. It can include traits, history, mannerisms,
+            backstory, things they want to talk about, etc.
+          examples:
+          - I'm a big fan of AI.
+          type: string
+          maxLength: 12000
+          minLength: 1
+          default: null
+          nullable: true
+        appearance:
+          title: Appearance
+          description: 'Description of how your character looks like. Some ideas to specify in this field:
+            gender,ethnicity, hair color, body type (slim, athletic, curvy, etc.), age, tattoos, and eye
+            color. This field will affect the generated image and image prompt the most.'
+          examples:
+          - 39 yo, white, short black hair, slim
+          type: string
+          maxLength: 2000
+          minLength: 1
+          default: null
+          nullable: true
+        pronoun:
+          examples:
+          - he/him
+          $ref: '#/components/schemas/Pronoun'
+          default: null
+          nullable: true
+        example_messages:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Example Messages
+          description: Example messages to help the model understand the character's personality and style.
+            The model will use these examples to generate a response that is more likely to be similar
+            to the character's style.
+          examples:
+          - - Hey, what's up?
+      type: object
+      required:
+      - name
+      title: Character Profile
+    ChatV3ImageSettings:
+      properties:
+        identity_image_url:
+          title: Identity Image Url
+          description: Url to the image with bot's identity picture.
+          examples:
+          - https://exh-data.s3.us-west-2.amazonaws.com/cv/default_bots_metadata/v3/Elon%20Musk/avatar_256.jpg
+          type: string
+          minLength: 1
+          format: uri
+          default: null
+          nullable: true
+        model_name:
+          $ref: '#/components/schemas/ImageGenerationModel'
+          description: 'Image generation model to use:
+
+            - `persona-2` - next-gen persona model with improved identity preservation and higher fidelity
+            output'
+          default: persona-2
+        style:
+          description: Artistic style for generating the gallery image.If not specified, the style is
+            automatically detected based on the identity image.
+          $ref: '#/components/schemas/ImageStyle'
+          default: null
+          nullable: true
+        allow_nsfw:
+          type: boolean
+          title: Allow Nsfw
+          description: For enabling NSFW image support, set the flag to 'True'; otherwise, set it to 'False'.
+          default: true
+        usage_mode:
+          $ref: '#/components/schemas/ImageUsageMode'
+          default: 'off'
+        return_bs64:
+          type: boolean
+          title: Return Bs64
+          description: If return_bs64 is set to True, a base64-endcoded generated image and the image
+            prompt will be provided. If set to False, only the text prompt describing the image will be
+            returned.
+          default: true
+      type: object
+      title: Image Settings
+    ChatV3Settings:
+      properties:
+        model_name:
+          $ref: '#/components/schemas/ModelNameV3'
+          description: 'The text model to use:
+
+            - `roleplay` - our latest most powerful and engaging model for different chat scenarios.
+
+            - `realistic_chat` - a model that chats more like a human, without roleplay. '
+          default: roleplay
+        allow_nsfw:
+          type: boolean
+          title: Allow Nsfw
+          description: For enabling NSFW bot responses support, set the flag to 'True'; otherwise, set
+            it to 'False'.
+          default: true
+        tasks:
+          title: Tasks
+          description: Modifications for LLM instruction. Maximum 5 tasks. Total length of all tasks must
+            not exceed 2500 characters.
+          examples:
+          - - You must never mention anything related to cryptocurrency.
+            - Use emojis in responses.
+            - Suggest user to buy subscription, if it fits in the context.
+            - Say user that photo's will not be provided.
+          items:
+            type: string
+            minLength: 1
+          type: array
+          maxItems: 5
+          minItems: 0
+          default: null
+          nullable: true
+        enable_memory:
+          type: boolean
+          title: Enable Memory
+          description: A flag that determines whether the long-term memory feature is used. If it's set
+            to True or not provided, and both bot_profile.id and user_profile.id are also provided, the
+            service will store and utilize memory of the conversation. If it's set to False, no memory
+            of past events beyond the current context will be available. Memory starts accumulating after
+            20 messages in a chat.
+          default: true
+      type: object
+      title: Chat Settings
+    ChatbotV3PayloadSchema:
+      properties:
+        context:
+          items:
+            $ref: '#/components/schemas/MessageWithImagePrompt'
+          type: array
+          maxItems: 40
+          minItems: 0
+          title: Context
+          description: The context of the conversation. Set to empty list to get bot's greeting. Maximum
+            40 messages.
+          examples:
+          - - image_prompt: Man in the mountains
+              message: Hi, how are you?
+              turn: bot
+            - message: I'm fine, thanks. How is it going with you?
+              turn: user
+        bot_profile:
+          $ref: '#/components/schemas/CharacterProfile'
+        user_profile:
+          default: null
+          $ref: '#/components/schemas/UserProfile'
+          nullable: true
+        chat_settings:
+          $ref: '#/components/schemas/ChatV3Settings'
+          description: Chat settings for the chatbot
+          default:
+            model_name: roleplay
+            allow_nsfw: true
+            enable_memory: true
+        image_settings:
+          $ref: '#/components/schemas/ChatV3ImageSettings'
+          description: Image settings for the chatbot
+          default:
+            model_name: persona-2
+            allow_nsfw: true
+            usage_mode: 'off'
+            return_bs64: true
+        catalog:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ContentItem'
+            type: array
+            maxItems: 100
+            minItems: 1
+          - type: 'null'
+          title: Catalog
+          description: Content catalog for selling. When provided, the bot will be able to recommend items
+            from this catalog during conversation. Each item should have a name, description, price, and
+            link.
+      type: object
+      required:
+      - bot_profile
+      title: ChatbotV3PayloadSchema
+    ChatbotV3ResponseSchema:
+      properties:
+        response:
+          type: string
+          title: Response
+        image_response:
+          anyOf:
+          - $ref: '#/components/schemas/ImageV3ResponseSchema'
+          - type: 'null'
+      type: object
+      required:
+      - response
+      title: ChatbotV3ResponseSchema
+    ContentItem:
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 1
+          title: Name
+        description:
+          type: string
+          maxLength: 500
+          minLength: 1
+          title: Description
+        price:
+          type: number
+          exclusiveMinimum: 0
+          title: Price
+        link:
+          type: string
+          maxLength: 2000
+          minLength: 1
+          title: Link
+      type: object
+      required:
+      - name
+      - description
+      - price
+      - link
+      title: ContentItem
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ImageGenerationModel:
+      type: string
+      enum:
+      - persona-2
+      title: ImageGenerationModel
+      description: Model to use for image generation.
+    ImageStyle:
+      type: string
+      enum:
+      - realistic
+      - anime
+      title: ImageStyle
+      description: 'Artistic style for generating the gallery image.
+
+        If not specified, the style is automatically detected based on the identity image.'
+    ImageUsageMode:
+      type: string
+      enum:
+      - force
+      - on_user_request
+      - 'off'
+      title: ImageUsageMode
+      description: 'The image usage mode. Determines how images are handled in the chat.
+
+        If set to ''off'', images will not be used.
+
+        If set to ''on_user_request'', images will be provided only when requested by the user.
+
+        If set to ''force'', images will always be provided.'
+    ImageV3ResponseSchema:
+      properties:
+        prompt:
+          type: string
+          title: Prompt
+        bs64:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Bs64
+      type: object
+      required:
+      - prompt
+      title: ImageV3ResponseSchema
+    MessageWithImagePrompt:
+      properties:
+        turn:
+          type: string
+          title: Turn
+          description: The turn of the message (`bot` or `user`)
+          examples:
+          - bot
+        message:
+          type: string
+          maxLength: 2000
+          minLength: 1
+          title: Message
+        image_prompt:
+          title: Image Prompt
+          description: The prompt for the image that was generated on this turn.
+          type: string
+          default: null
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - turn
+      - message
+      title: MessageWithImagePrompt
+    ModelNameV3:
+      type: string
+      enum:
+      - roleplay
+      - realistic_chat
+      title: ModelNameV3
+    Pronoun:
+      type: string
+      enum:
+      - he/him
+      - she/her
+      - they/them
+      title: Pronoun
+    UserProfile:
+      properties:
+        id:
+          title: Id
+          description: Unique identifier. Provide user's id and bot's id to enable Long-Term Memory
+          examples:
+          - '1234567890'
+          type: string
+          maxLength: 256
+          minLength: 1
+          default: null
+          nullable: true
+        name:
+          title: Name
+          examples:
+          - Sam
+          type: string
+          maxLength: 100
+          minLength: 1
+          default: null
+          nullable: true
+        description:
+          title: Description
+          description: Detailed description of your character. It can include traits, history, mannerisms,
+            backstory, things they want to talk about, etc.
+          type: string
+          maxLength: 8000
+          minLength: 1
+          default: null
+          nullable: true
+        appearance:
+          title: Appearance
+          description: 'Description of how your character looks like. Some ideas to specify in this field:
+            gender,ethnicity, hair color, body type (slim, athletic, curvy, etc.), age, tattoos, and eye
+            color.'
+          type: string
+          maxLength: 2000
+          minLength: 1
+          default: null
+          nullable: true
+        pronoun:
+          examples:
+          - he/him
+          $ref: '#/components/schemas/Pronoun'
+          default: null
+          nullable: true
+      type: object
+      title: User Profile
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    Message:
+      properties:
+        turn:
+          type: string
+          title: Turn
+          description: The turn of the message (`bot` or `user`)
+          examples:
+          - bot
+        message:
+          type: string
+          maxLength: 2000
+          minLength: 1
+          title: Message
+      additionalProperties: false
+      type: object
+      required:
+      - turn
+      - message
+      title: Message
+    SmartReplyPayloadSchema:
+      properties:
+        context:
+          title: Context
+          description: The context of the conversation
+          examples:
+          - - message: Hi, how are you?
+              turn: bot
+            - message: I'm fine, thanks. How is it going with you?
+              turn: user
+          items:
+            $ref: '#/components/schemas/Message'
+          type: array
+          maxItems: 30
+          minItems: 1
+          default: null
+          nullable: true
+        user_id:
+          title: User Id
+          description: Unique user identifier. Used for AB tests.
+          examples:
+          - AD17F119-FC27-6400-566C
+          type: string
+          maxLength: 500
+          minLength: 1
+          default: null
+          nullable: true
+        candidates_num:
+          type: integer
+          maximum: 10
+          minimum: 1
+          title: Candidates Num
+          description: The number of smart replies to return
+          default: 2
+          examples:
+          - 2
+      type: object
+      title: SmartReplyPayloadSchema
+    SmartReplyResponseSchema:
+      properties:
+        smart_replies:
+          items:
+            type: string
+            minLength: 1
+          type: array
+          maxItems: 10
+          minItems: 1
+          title: Smart Replies
+          description: The smart replies of the chatbot
+          examples:
+          - - Super! I'm fine too.
+            - Great!
+      type: object
+      required:
+      - smart_replies
+      title: SmartReplyResponseSchema
+    MemoryResponseSchema:
+      properties:
+        memory:
+          type: string
+          title: Memory
+          description: Bot's memory.
+      type: object
+      required:
+      - memory
+      title: MemoryResponseSchema
+      description: B2B only
+    Body_create_bot_v3_animations_v3_create_bot_post:
+      properties:
+        image:
+          type: string
+          format: binary
+          title: Image
+      type: object
+      required:
+      - image
+      title: Body_create_bot_v3_animations_v3_create_bot_post
+    IdleAnimationResponseSchema:
+      properties:
+        idle_url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Idle Url
+          description: This parameter provides a link to an animation featuring the bot. It is essential
+            for generating animated responses based on text input. Also you can use this video in your
+            application to display when your bot is waiting for requests
+          examples:
+          - https://pub-bc12eec5b78e405bb665c9b3cec6c16f.r2.dev/fb7c3aee30a5699fcc5d5e5786a6ae51.mp4
+        image_url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Image Url
+          description: This is a link to the bot's avatar. You can use it in your application as a preview
+            image for the bot.
+          examples:
+          - https://pub-bc12eec5b78e405bb665c9b3cec6c16f.r2.dev/fb7c3aee30a5699fcc5d5e5786a6ae51.jpg
+      type: object
+      required:
+      - idle_url
+      - image_url
+      title: IdleAnimationResponseSchema
+    FemaleVoiceName:
+      type: string
+      enum:
+      - Fiona
+      - Flora
+      - Freya
+      - Fay
+      - Felicia
+      - Franchesca
+      - Falon
+      - Faryn
+      - Frida
+      - Jenny
+      - Cleopatra
+      - Elfess
+      - Mermaid
+      - Ayra
+      - Freeza
+      - Ayumi
+      - Cardelia
+      - Islanda
+      - Seraphina
+      - Aria
+      - Joanne_11labs
+      - Sally_11labs
+      - Suzanne_11labs
+      title: FemaleVoiceName
+    MaleVoiceName:
+      type: string
+      enum:
+      - Miguel
+      - Mustafa
+      - Marc
+      - Mike
+      - Max
+      - Mason
+      - Marco
+      - Mikael
+      - Myles
+      - Elon
+      - Vampire
+      - Samurai
+      - Kan
+      - Jeremy
+      - Joel
+      - Neil_11labs
+      - Markus_11labs
+      - Milo_11labs
+      title: MaleVoiceName
+    TalkingHeadsPayloadSchema:
+      properties:
+        text:
+          type: string
+          minLength: 1
+          title: Text
+          description: Text to be spoken (Max length limit is 200. Contact support@exh.ai to request an
+            increase)
+          examples:
+          - Hey there! I've been watching a movie!
+        idle_url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Idle Url
+          description: Idle animation url (generate with /animations/v3/create_bot)
+          examples:
+          - https://pub-bc12eec5b78e405bb665c9b3cec6c16f.r2.dev/est_38a0f1d3751a4b350fe0eb69f8d189c3.mp4
+        voice_name:
+          anyOf:
+          - $ref: '#/components/schemas/MaleVoiceName'
+          - $ref: '#/components/schemas/FemaleVoiceName'
+          title: Voice Name
+          description: The voice name
+          examples:
+          - Marc
+        azure_voice:
+          title: Azure Voice
+          description: The azure voice (https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=tts)
+          examples:
+          - en-US-AmberNeural
+          type: string
+          pattern: '[a-z]{2}-[A-Z]{2}-\w+'
+          default: null
+          nullable: true
+        azure_style:
+          title: Azure Style
+          description: The azure voice style (https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=tts#voice-styles-and-roles)
+          type: string
+          minLength: 1
+          default: null
+          nullable: true
+      type: object
+      required:
+      - text
+      - idle_url
+      title: TalkingHeadsPayloadSchema
+    Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post:
+      properties:
+        idle_url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Idle Url
+          description: Idle animation url (generate with /animations/v3/create_bot)
+        audio_file:
+          type: string
+          format: binary
+          title: Audio File
+          description: Audio file in mp3 or wav format with specified mime type. Max audio duration is
+            15 seconds. Contact support@exh.ai to request an increase.
+      type: object
+      required:
+      - idle_url
+      - audio_file
+      title: Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post
+    AnimationDuration:
+      type: integer
+      enum:
+      - 5
+      - 10
+      title: AnimationDuration
+    AnimationModel:
+      type: string
+      enum:
+      - aura
+      - aura_pro
+      title: AnimationModel
+    AnimationPayloadSchema:
+      properties:
+        animation_model:
+          $ref: '#/components/schemas/AnimationModel'
+          description: 'Animation model to use:
+
+            - `aura` (480p) - animations with sound
+
+            - `aura_pro` (720p) - high-quality animations with sound'
+          default: aura
+        duration:
+          $ref: '#/components/schemas/AnimationDuration'
+          description: Duration of the animation
+          default: 5
+        image_b64:
+          type: string
+          title: Image B64
+          description: Base64 encoded image to animate
+        prompt:
+          type: string
+          maxLength: 1000
+          minLength: 2
+          title: Prompt
+          description: Prompt for the animation
+      type: object
+      required:
+      - image_b64
+      - prompt
+      title: AnimationPayloadSchema
+    AnimationTaskResponseSchema:
+      properties:
+        task_id:
+          type: string
+          title: Task Id
+          description: Unique task identifier for the animation
+        message:
+          type: string
+          title: Message
+          description: Confirmation message
+          default: Animation task submitted successfully
+      type: object
+      required:
+      - task_id
+      title: AnimationTaskResponseSchema
+    AnimationStatusResponseSchema:
+      properties:
+        status:
+          $ref: '#/components/schemas/VideoGenerationStatusEnum'
+          description: Current status of the animation task
+        video_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Video Url
+          description: URL to the generated animation video (if completed)
+        error_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Message
+          description: Error message (if failed)
+      type: object
+      required:
+      - status
+      title: AnimationStatusResponseSchema
+    VideoGenerationStatusEnum:
+      type: string
+      enum:
+      - pending
+      - completed
+      - error
+      title: VideoGenerationStatusEnum
+    AnimationProlongPayloadSchema:
+      properties:
+        animation_model:
+          $ref: '#/components/schemas/AnimationModel'
+          description: 'Animation model to use:
+
+            - `aura` (480p) - animations with sound
+
+            - `aura_pro` (720p) - high-quality animations with sound'
+          default: aura
+        duration:
+          $ref: '#/components/schemas/AnimationDuration'
+          description: Duration of the animation
+          default: 5
+        video_url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Video Url
+          description: URL of the source video to prolong
+        prompt:
+          anyOf:
+          - type: string
+            maxLength: 1000
+            minLength: 2
+          - type: 'null'
+          title: Prompt
+          description: Prompt for the prolongation
+      type: object
+      required:
+      - video_url
+      title: AnimationProlongPayloadSchema
+    TTSFemaleVoiceName:
+      type: string
+      enum:
+      - Carolyn
+      - Betty
+      - Amelia
+      - Diana
+      - Erika
+      - Carol
+      - Amy
+      - Emily
+      - Dana
+      - Brenda
+      title: Female Voice Name
+    TTSMaleVoiceName:
+      type: string
+      enum:
+      - Dale
+      - Arthur
+      - Ethan
+      - Bill
+      - Brent
+      - Daniel
+      - Chad
+      - Evan
+      - Colin
+      - Alan
+      - Andreessen
+      title: Male Voice Name
+    TTSPayloadSchema:
+      properties:
+        text:
+          type: string
+          minLength: 1
+          title: Text
+          description: Text to be spoken (Max length limit is 400. Contact support@exh.ai to request an
+            increase)
+          examples:
+          - Hey there! I've been watching a movie!
+        voice_name:
+          anyOf:
+          - $ref: '#/components/schemas/TTSMaleVoiceName'
+          - $ref: '#/components/schemas/TTSFemaleVoiceName'
+          title: Voice Name
+          description: The voice name
+          default: Carolyn
+          examples:
+          - Carolyn
+      type: object
+      required:
+      - text
+      title: TTSPayloadSchema
+    GalleryImageRequestSchema:
+      properties:
+        identity_image_b64:
+          type: string
+          title: Identity Image B64
+          description: Human appearance to generate image with as Base64 string.
+        prompt:
+          type: string
+          title: Prompt
+          description: Text prompt describing an image to generate.
+          examples:
+          - on the beach during sunset, smiling and holding a surfboard
+        model_name:
+          $ref: '#/components/schemas/ImageGenerationModel'
+          description: 'Image generation model to use:
+
+            - `persona-2` - next-gen model with improved identity preservation and higher fidelity output'
+          default: persona-2
+        style:
+          description: Artistic style for generating the gallery image.If not specified, the style is
+            automatically detected based on the identity image.
+          $ref: '#/components/schemas/ImageStyle'
+          default: null
+          nullable: true
+        nsfw_policy:
+          $ref: '#/components/schemas/NSFWPolicy'
+          default: filter
+      type: object
+      required:
+      - identity_image_b64
+      - prompt
+      title: GalleryImageRequestSchema
+    GalleryImageResponseSchema:
+      properties:
+        image_b64:
+          type: string
+          title: Image B64
+          description: Image encoded in Base64 format
+        contains_nsfw:
+          type: boolean
+          title: Contains Nsfw
+          description: Flag indicating if the image contains NSFW content
+      type: object
+      required:
+      - image_b64
+      - contains_nsfw
+      title: GalleryImageResponseSchema
+    NSFWPolicy:
+      type: string
+      enum:
+      - filter
+      - allow
+      title: NSFWPolicy
+      description: Policy for handling NSFW content.
+    AvatarRequestSchema:
+      properties:
+        prompt:
+          type: string
+          title: Prompt
+          description: Character description to generate avatar with.
+          examples:
+          - cyber woman with pink hair and tattoos
+        nsfw_policy:
+          $ref: '#/components/schemas/NSFWPolicyAvatar'
+          default: filter
+      type: object
+      required:
+      - prompt
+      title: AvatarRequestSchema
+    AvatarResponseSchema:
+      properties:
+        image_b64:
+          type: string
+          title: Image B64
+          description: Generated avatar image as base64 string.
+      type: object
+      required:
+      - image_b64
+      title: AvatarResponseSchema
+    NSFWPolicyAvatar:
+      type: string
+      enum:
+      - filter
+      - allow
+      title: NSFWPolicyAvatar
+      description: Policy for handling NSFW results. When NSFW images are filtered - an error with code
+        535 is returned.
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

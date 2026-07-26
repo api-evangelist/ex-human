@@ -1,0 +1,101 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/ex-human-openapi.yml
+notes: 'Entity graph derived from OpenAPI component schemas ($ref links). Ex-Human is a stateless generation
+  API: the core composite is the chat request (a CharacterProfile ''bot'' plus optional UserProfile, chat/image
+  settings, message context, and an optional sell catalog). Long-term memory is keyed by the bot+user
+  ids.'
+entities:
+- name: CharacterProfile
+  role: bot persona
+  key_fields:
+  - id
+  - name
+  - description
+  - appearance
+  - pronoun
+  - example_messages
+- name: UserProfile
+  role: user persona
+  key_fields:
+  - id
+  - name
+  - description
+  - appearance
+  - pronoun
+- name: ChatbotV3PayloadSchema
+  role: chat request
+  key_fields:
+  - context
+  - bot_profile
+  - user_profile
+  - chat_settings
+  - image_settings
+  - catalog
+- name: MessageWithImagePrompt
+  role: conversation turn
+  key_fields:
+  - turn
+  - message
+  - image_prompt
+- name: ContentItem
+  role: sellable catalog item
+  key_fields:
+  - name
+  - description
+  - price
+  - link
+- name: ChatV3Settings
+  role: text model settings
+  key_fields:
+  - model_name
+  - allow_nsfw
+  - tasks
+  - enable_memory
+- name: ChatV3ImageSettings
+  role: image model settings
+  key_fields:
+  - identity_image_url
+  - model_name
+  - style
+  - allow_nsfw
+  - usage_mode
+  - return_bs64
+- name: ChatbotV3ResponseSchema
+  role: chat response
+  key_fields:
+  - response
+  - image_response
+relationships:
+- from: ChatbotV3PayloadSchema
+  to: CharacterProfile
+  type: has_one
+  via: bot_profile
+- from: ChatbotV3PayloadSchema
+  to: UserProfile
+  type: has_one
+  via: user_profile
+- from: ChatbotV3PayloadSchema
+  to: MessageWithImagePrompt
+  type: has_many
+  via: context
+- from: ChatbotV3PayloadSchema
+  to: ChatV3Settings
+  type: has_one
+  via: chat_settings
+- from: ChatbotV3PayloadSchema
+  to: ChatV3ImageSettings
+  type: has_one
+  via: image_settings
+- from: ChatbotV3PayloadSchema
+  to: ContentItem
+  type: has_many
+  via: catalog
+- from: ChatbotV3ResponseSchema
+  to: ImageV3ResponseSchema
+  type: has_one
+  via: image_response
+- from: CharacterProfile
+  to: UserProfile
+  type: belongs_to
+  via: 'id (memory key: bot id + user id)'

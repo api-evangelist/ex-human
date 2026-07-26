@@ -1,0 +1,40 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.exh.ai/reference/getting-started-with-your-api
+openapi_source: openapi/ex-human-openapi.yml
+authentication:
+  style: http-bearer
+  header: 'Authorization: Bearer <token>'
+  admin_url: https://admin.exh.ai/
+  ref: authentication/ex-human-authentication.yml
+request_tracing:
+  header: X-Request-Id
+  required: false
+  notes: Optional per-request correlation id accepted on every operation; a UUID default is generated
+    when omitted.
+versioning:
+  style: uri-path
+  notes: 'Each service is versioned independently in the path: chatbot v2/v3, animations v3, tts v1, image
+    v1.'
+  ref: lifecycle/ex-human-lifecycle.yml
+async_jobs:
+  pattern: create-then-poll
+  notes: Long-running animation work is submitted to /animations/v3/jobs (and /animations/v3/prolong_jobs),
+    returning a task_id polled at GET /animations/v3/jobs/{task_id}.
+idempotency:
+  supported: false
+  notes: No idempotency-key header or parameter is documented; create-job operations are not declared
+    idempotent.
+pagination:
+  supported: false
+  notes: No list endpoints with pagination; memory retrieval returns the full stored memory for a chat.
+rate_limits:
+  documented: false
+  notes: No public rate-limit headers or quotas are documented; usage is metered and billed per generation
+    on the Enterprise/Pro plans.
+error_envelope:
+  shape: HTTPValidationError (FastAPI)
+  ref: errors/ex-human-problem-types.yml
+content_types:
+  request: application/json
+  responses: application/json, plus streaming audio (WAV) for text-to-speech and video URLs for animations

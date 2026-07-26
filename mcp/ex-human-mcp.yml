@@ -1,0 +1,48 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/ex-human-openapi.yml
+notes: Candidate MCP tool surface derived one-to-one from the Ex-Human OpenAPI operations. No official
+  hosted/remote Ex-Human MCP server was found (searched docs.exh.ai, npm @modelcontextprotocol, and MCP
+  registries). Bearer token from https://admin.exh.ai/ required.
+server:
+  name: ex-human
+  transport: http
+  auth: http-bearer
+tools:
+- name: chat_response
+  description: Get a multimodal chat response (text + optional image) from an AI character.
+  source_operation: openapi/ex-human-openapi.yml#get_response_chatbot_v3_response_post
+- name: get_smart_replies
+  description: Get suggested user replies for the current dialog context.
+  source_operation: openapi/ex-human-openapi.yml#get_smart_replies_chatbot_v2_get_smart_replies_post
+- name: clear_memory
+  description: Clear the long-term memory for a chat.
+  source_operation: openapi/ex-human-openapi.yml#delete_memory_chatbot_v3_memory_delete
+- name: create_idle_animation
+  description: Create an idle animation video for an AI Human from an image.
+  source_operation: openapi/ex-human-openapi.yml#create_bot_v3_animations_v3_create_bot_post
+- name: talking_head_from_text
+  description: Generate a lip-synced talking-head video from text.
+  source_operation: openapi/ex-human-openapi.yml#generate_lipsync_v3_animations_v3_generate_lipsync_post
+- name: talking_head_from_audio
+  description: Generate a lip-synced talking-head video from an audio file.
+  source_operation: openapi/ex-human-openapi.yml#generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post
+- name: create_animation_job
+  description: Submit an image-to-video animation job; returns a task_id.
+  source_operation: openapi/ex-human-openapi.yml#create_animation_job_animations_v3_jobs_post
+- name: get_animation_job
+  description: Poll the status/result of an animation job by task_id.
+  source_operation: openapi/ex-human-openapi.yml#get_animation_job_animations_v3_jobs__task_id__get
+- name: prolong_animation_job
+  description: Submit a job to prolong an existing video; returns a task_id.
+  source_operation: openapi/ex-human-openapi.yml#create_prolong_animation_job_animations_v3_prolong_jobs_post
+- name: generate_speech
+  description: Convert text to spoken WAV audio (text-to-speech).
+  source_operation: openapi/ex-human-openapi.yml#generate_speech_tts_v1_generate_speech_post
+- name: generate_gallery_image
+  description: Generate a personalized gallery-style image from an identity image and prompt.
+  source_operation: openapi/ex-human-openapi.yml#generate_gallery_image_image_v1_generate_gallery_image_post
+- name: generate_avatar
+  description: Generate a personalized avatar image from a text description.
+  source_operation: openapi/ex-human-openapi.yml#generate_avatar_image_v1_generate_avatar_post
