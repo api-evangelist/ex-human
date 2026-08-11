@@ -109,6 +109,8 @@ apis:
   - type: GettingStarted
     url: https://docs.exh.ai/reference/getting-started-with-your-api
 common:
+- type: Overlay
+  url: overlays/ex-human-openapi-overlay.yaml
 - type: DomainSecurity
   url: security/ex-human-domain-security.yml
 - type: AgenticAccess
