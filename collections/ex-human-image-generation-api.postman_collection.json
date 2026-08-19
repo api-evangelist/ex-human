@@ -1,0 +1,396 @@
+{
+  "item": [
+    {
+      "id": "ca25d1eb-5376-4a61-be7b-70e2615d1025",
+      "name": "Image Generation",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f7afd5d6-1f41-4d36-a64f-323c42f7642a",
+          "name": "Generate Gallery Image",
+          "request": {
+            "name": "Generate Gallery Image",
+            "description": {
+              "content": "Creates a personalized gallery-style image based on an identity image and a descriptive prompt.\n\nIt is ideal for generating visually appealing images with particular human identity\nthat align with specific themes or contexts, making it suitable\nfor applications like personalized marketing, content creation, and more.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "image",
+                "v1",
+                "generate_gallery_image"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Request-Id",
+                "value": "ae00ea02-0778-4a47-9bd2-47b50befc18b",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identity_image_b64\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"model_name\": \"persona-2\",\n  \"style\": null,\n  \"nsfw_policy\": \"filter\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "59c09f97-3ff1-4142-998c-0d3497b1c4d4",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "image",
+                    "v1",
+                    "generate_gallery_image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Id",
+                    "value": "ae00ea02-0778-4a47-9bd2-47b50befc18b",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity_image_b64\": \"<string>\",\n  \"prompt\": \"on the beach during sunset, smiling and holding a surfboard\",\n  \"model_name\": \"persona-2\",\n  \"style\": null,\n  \"nsfw_policy\": \"filter\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"image_b64\": \"string\",\n  \"contains_nsfw\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf0a82db-6305-4162-bf1f-6695f9d1d4fc",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "image",
+                    "v1",
+                    "generate_gallery_image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Id",
+                    "value": "ae00ea02-0778-4a47-9bd2-47b50befc18b",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity_image_b64\": \"<string>\",\n  \"prompt\": \"on the beach during sunset, smiling and holding a surfboard\",\n  \"model_name\": \"persona-2\",\n  \"style\": null,\n  \"nsfw_policy\": \"filter\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "df0c2540-78b8-4187-bb00-085ed227146f",
+          "name": "Generate Avatar",
+          "request": {
+            "name": "Generate Avatar",
+            "description": {
+              "content": "Produces a personalized avatar image based on a textual description provided by the user.\n\nIt is ideal for creating unique profile pictures, characters for games,\nor digital representations for various applications.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "image",
+                "v1",
+                "generate_avatar"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Request-Id",
+                "value": "239a01b4-0862-4ca9-bd35-e26bfa969b6b",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"<string>\",\n  \"nsfw_policy\": \"filter\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6d77a31a-1fef-4226-a32c-38238eb95dc3",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "image",
+                    "v1",
+                    "generate_avatar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Id",
+                    "value": "239a01b4-0862-4ca9-bd35-e26bfa969b6b",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"cyber woman with pink hair and tattoos\",\n  \"nsfw_policy\": \"filter\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"image_b64\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a217f449-53d0-41f6-ade9-8718bbce76df",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "image",
+                    "v1",
+                    "generate_avatar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Id",
+                    "value": "239a01b4-0862-4ca9-bd35-e26bfa969b6b",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"cyber woman with pink hair and tattoos\",\n  \"nsfw_policy\": \"filter\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exh.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "18ec59bf-bba8-4fa2-a532-d0858dae88f2",
+    "name": "Ex-Human animations Image Generation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Ex-Human\n\nEx-Human is a chatbot that can talk to you like a human.\n\nCurrently we host several services here:\n\n- Chatbot (for B2B clients)\n- Chat images manager (image generation for chats)\n- Admin service (adding and deactivating B2B clients, checking stats)\n- Animations (lipsync, idle animation)\n- Moderation (get various safety labels)\n",
+      "type": "text/plain"
+    }
+  }
+}

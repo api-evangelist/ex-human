@@ -1,0 +1,577 @@
+{
+  "item": [
+    {
+      "id": "f7803cba-491d-4354-a313-df763dcaed05",
+      "name": "chatbot",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3d0bfe12-232f-4a02-bfa4-139543c684aa",
+          "name": "Get Multimodal Chat Response",
+          "request": {
+            "name": "Get Multimodal Chat Response",
+            "description": {
+              "content": "Multimodal chat response endpoint.\n\nIt can be used to support engaging conversations with both text and image responses.\n\nFor usage examples, see: https://docs.exh.ai/recipes/multimodal-chat",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "chatbot",
+                "v3",
+                "response"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Request-Id",
+                "value": "16f19b16-b0c1-4c3c-8f14-a0f283dc93b9",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bot_profile\": {\n    \"name\": \"<string>\",\n    \"id\": null,\n    \"description\": null,\n    \"appearance\": null,\n    \"pronoun\": null,\n    \"example_messages\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"context\": [\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    },\n    {\n      \"turn\": \"<string>\",\n      \"message\": \"<string>\",\n      \"image_prompt\": null\n    }\n  ],\n  \"user_profile\": null,\n  \"chat_settings\": {\n    \"model_name\": \"roleplay\",\n    \"allow_nsfw\": true,\n    \"enable_memory\": true\n  },\n  \"image_settings\": {\n    \"model_name\": \"persona-2\",\n    \"allow_nsfw\": true,\n    \"usage_mode\": \"off\",\n    \"return_bs64\": true\n  },\n  \"catalog\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"price\": \"<number>\",\n      \"link\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8531c44c-c55d-4967-b791-37d14b9f2152",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chatbot",
+                    "v3",
+                    "response"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Id",
+                    "value": "16f19b16-b0c1-4c3c-8f14-a0f283dc93b9",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"bot_profile\": {\n    \"name\": \"Sam\",\n    \"id\": \"1234567890\",\n    \"description\": \"I'm a big fan of AI.\",\n    \"appearance\": \"39 yo, white, short black hair, slim\",\n    \"pronoun\": \"he/him\",\n    \"example_messages\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"context\": [\n    {\n      \"image_prompt\": \"Man in the mountains\",\n      \"message\": \"Hi, how are you?\",\n      \"turn\": \"bot\"\n    },\n    {\n      \"message\": \"I'm fine, thanks. How is it going with you?\",\n      \"turn\": \"user\"\n    }\n  ],\n  \"user_profile\": null,\n  \"chat_settings\": {\n    \"model_name\": \"roleplay\",\n    \"allow_nsfw\": true,\n    \"enable_memory\": true\n  },\n  \"image_settings\": {\n    \"model_name\": \"persona-2\",\n    \"allow_nsfw\": true,\n    \"usage_mode\": \"off\",\n    \"return_bs64\": true\n  },\n  \"catalog\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"price\": 2966.894195313236,\n      \"link\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"string\",\n  \"image_response\": {\n    \"prompt\": \"string\",\n    \"bs64\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07400176-8b4f-4932-8c6a-453f6191afec",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chatbot",
+                    "v3",
+                    "response"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Id",
+                    "value": "16f19b16-b0c1-4c3c-8f14-a0f283dc93b9",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"bot_profile\": {\n    \"name\": \"Sam\",\n    \"id\": \"1234567890\",\n    \"description\": \"I'm a big fan of AI.\",\n    \"appearance\": \"39 yo, white, short black hair, slim\",\n    \"pronoun\": \"he/him\",\n    \"example_messages\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"context\": [\n    {\n      \"image_prompt\": \"Man in the mountains\",\n      \"message\": \"Hi, how are you?\",\n      \"turn\": \"bot\"\n    },\n    {\n      \"message\": \"I'm fine, thanks. How is it going with you?\",\n      \"turn\": \"user\"\n    }\n  ],\n  \"user_profile\": null,\n  \"chat_settings\": {\n    \"model_name\": \"roleplay\",\n    \"allow_nsfw\": true,\n    \"enable_memory\": true\n  },\n  \"image_settings\": {\n    \"model_name\": \"persona-2\",\n    \"allow_nsfw\": true,\n    \"usage_mode\": \"off\",\n    \"return_bs64\": true\n  },\n  \"catalog\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"price\": 2966.894195313236,\n      \"link\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "23563de7-e48d-4eab-b72c-4fc993541320",
+          "name": "Get Smart Replies",
+          "request": {
+            "name": "Get Smart Replies",
+            "description": {
+              "content": "Smart reply endpoint.\n\nUse it to get possible user responses for the current dialog context. They can be served as a\n help for the user on how to continue the conversation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "chatbot",
+                "v2",
+                "get_smart_replies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Request-Id",
+                "value": "682decba-2b2c-4175-a1cc-d8b82623e60f",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"context\": null,\n  \"user_id\": null,\n  \"candidates_num\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1b78b12c-faa9-4b40-8d60-035df0de1182",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chatbot",
+                    "v2",
+                    "get_smart_replies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Id",
+                    "value": "682decba-2b2c-4175-a1cc-d8b82623e60f",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"context\": [\n    {\n      \"message\": \"Hi, how are you?\",\n      \"turn\": \"bot\"\n    },\n    {\n      \"message\": \"I'm fine, thanks. How is it going with you?\",\n      \"turn\": \"user\"\n    }\n  ],\n  \"user_id\": \"AD17F119-FC27-6400-566C\",\n  \"candidates_num\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"smart_replies\": [\n    \"Super! I'm fine too.\",\n    \"Great!\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08d7f5eb-1a08-44a7-ba90-a0d1a4259446",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chatbot",
+                    "v2",
+                    "get_smart_replies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Id",
+                    "value": "682decba-2b2c-4175-a1cc-d8b82623e60f",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"context\": [\n    {\n      \"message\": \"Hi, how are you?\",\n      \"turn\": \"bot\"\n    },\n    {\n      \"message\": \"I'm fine, thanks. How is it going with you?\",\n      \"turn\": \"user\"\n    }\n  ],\n  \"user_id\": \"AD17F119-FC27-6400-566C\",\n  \"candidates_num\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9b51ae37-5eef-4ccf-9ca6-9d57937e8203",
+          "name": "Clear Long-Term Memory",
+          "request": {
+            "name": "Clear Long-Term Memory",
+            "description": {},
+            "url": {
+              "path": [
+                "chatbot",
+                "v3",
+                "memory"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "bot_id",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "user_id",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Request-Id",
+                "value": "0d60bfb7-bda7-4cdb-8a43-572ab48e016b",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9bd5d851-3e99-4b72-a693-bb2412dd5c20",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chatbot",
+                    "v3",
+                    "memory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bot_id",
+                      "value": "AD17F119-FC27-6400-566C"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "PDS31104-FC27-6400-9DG2"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Id",
+                    "value": "0d60bfb7-bda7-4cdb-8a43-572ab48e016b",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea0066b8-2aca-4797-bc28-20640818909d",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chatbot",
+                    "v3",
+                    "memory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bot_id",
+                      "value": "AD17F119-FC27-6400-566C"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "PDS31104-FC27-6400-9DG2"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Id",
+                    "value": "0d60bfb7-bda7-4cdb-8a43-572ab48e016b",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exh.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "61ca17e4-6dda-4f18-8e4b-449ff8f02301",
+    "name": "Ex-Human animations chatbot API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Ex-Human\n\nEx-Human is a chatbot that can talk to you like a human.\n\nCurrently we host several services here:\n\n- Chatbot (for B2B clients)\n- Chat images manager (image generation for chats)\n- Admin service (adding and deactivating B2B clients, checking stats)\n- Animations (lipsync, idle animation)\n- Moderation (get various safety labels)\n",
+      "type": "text/plain"
+    }
+  }
+}

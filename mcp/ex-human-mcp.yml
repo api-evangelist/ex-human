@@ -46,3 +46,9 @@ tools:
 - name: generate_avatar
   description: Generate a personalized avatar image from a text description.
   source_operation: openapi/ex-human-openapi.yml#generate_avatar_image_v1_generate_avatar_post
+deployment:
+  mode: none
+  verified: derived
+  tools: 12
+  checked: '2026-08-12'
+  source: catalog MCP census

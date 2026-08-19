@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ex-Human animations chatbot API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "chatbot",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Multimodal Chat Response",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exh.ai/chatbot/v3/response",
+            "headers": [
+              {
+                "name": "X-Request-Id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Multimodal chat response endpoint.\n\nIt can be used to support engaging conversations with both text and image responses.\n\nFor usage examples, see: https://docs.exh.ai/recipes/multimodal-chat"
+        },
+        {
+          "info": {
+            "name": "Get Smart Replies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exh.ai/chatbot/v2/get_smart_replies",
+            "headers": [
+              {
+                "name": "X-Request-Id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Smart reply endpoint.\n\nUse it to get possible user responses for the current dialog context. They can be served as a\n help for the user on how to continue the conversation."
+        },
+        {
+          "info": {
+            "name": "Clear Long-Term Memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.exh.ai/chatbot/v3/memory",
+            "headers": [
+              {
+                "name": "X-Request-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bot_id",
+                "value": "AD17F119-FC27-6400-566C",
+                "type": "query"
+              },
+              {
+                "name": "user_id",
+                "value": "PDS31104-FC27-6400-9DG2",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Clear Long-Term Memory"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

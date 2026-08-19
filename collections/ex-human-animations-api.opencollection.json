@@ -1,0 +1,153 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ex-Human animations API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "animations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Idle Animation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exh.ai/animations/v3/create_bot",
+            "headers": [
+              {
+                "name": "X-Request-Id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Takes an image as input and returns a link to a video with an animated AI Human, which is called `idle_url`."
+        },
+        {
+          "info": {
+            "name": "Get Talking Head Video from Text",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exh.ai/animations/v3/generate_lipsync",
+            "headers": [
+              {
+                "name": "X-Request-Id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generates a lip-synced video of an AI Human speaking the text."
+        },
+        {
+          "info": {
+            "name": "Get Talking Head Video from Audio",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exh.ai/animations/v3/generate_lipsync_from_audio",
+            "headers": [
+              {
+                "name": "X-Request-Id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generates a lip-synced video of an AI Human from mp3 or wav audio file."
+        },
+        {
+          "info": {
+            "name": "Create Animation Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exh.ai/animations/v3/jobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generates an animation from a base64 encoded image and a prompt. Returns a task_id that can be used to poll for the animation status."
+        },
+        {
+          "info": {
+            "name": "Get Animation Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exh.ai/animations/v3/jobs/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the current status of an animation task."
+        },
+        {
+          "info": {
+            "name": "Create Prolong Animation Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exh.ai/animations/v3/prolong_jobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Prolongs an existing video using a source video URL and a prompt. Returns a task_id that can be used to poll for the animation status."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
