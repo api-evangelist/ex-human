@@ -38,6 +38,17 @@ tags:
 - Conversational AI
 - AI Companions
 - Generative AI
+- Text-to-Speech
+- Image-Generation
+- Video Generation
+- Avatars
+- Multi-Modal
+tags_raw:
+- Company
+- Artificial Intelligence
+- Conversational AI
+- AI Companions
+- Generative AI
 - Text to Speech
 - Image Generation
 - Video Generation
@@ -50,6 +61,8 @@ apis:
   humanURL: https://docs.exh.ai/reference/getting-started-with-your-api
   baseURL: https://api.exh.ai
   tags:
+  - Animations
+  tags_raw:
   - animations
   properties:
   - type: OpenAPI
@@ -66,6 +79,8 @@ apis:
   humanURL: https://docs.exh.ai/reference/getting-started-with-your-api
   baseURL: https://api.exh.ai
   tags:
+  - Chatbots
+  tags_raw:
   - chatbot
   properties:
   - type: OpenAPI
@@ -82,6 +97,8 @@ apis:
   humanURL: https://docs.exh.ai/reference/getting-started-with-your-api
   baseURL: https://api.exh.ai
   tags:
+  - Image-Generation
+  tags_raw:
   - Image Generation
   properties:
   - type: OpenAPI
@@ -98,6 +115,8 @@ apis:
   humanURL: https://docs.exh.ai/reference/getting-started-with-your-api
   baseURL: https://api.exh.ai
   tags:
+  - Text-to-Speech
+  tags_raw:
   - Text to Speech
   properties:
   - type: OpenAPI
