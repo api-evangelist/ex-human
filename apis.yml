@@ -10,6 +10,18 @@ description: Ex-Human is a "Digital Human as a Service" platform that provides a
   companies to power AI companions, entertainment and gaming NPCs, dating experiences, AI twins, education
   tutors, and healthcare and therapy support at scale.
 url: https://raw.githubusercontent.com/api-evangelist/ex-human/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
