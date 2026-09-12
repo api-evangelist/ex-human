@@ -141,6 +141,8 @@ apis:
   - type: GettingStarted
     url: https://docs.exh.ai/reference/getting-started-with-your-api
 common:
+- type: Website
+  url: https://www.exh.ai/
 - type: Overlay
   url: overlays/ex-human-openapi-overlay.yaml
 - type: DomainSecurity
