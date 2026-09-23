@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Ex-Human animations chatbot API
+  title: Ex-Human Chatbot API
   description: '# Ex-Human
 
 
@@ -18,9 +18,7 @@ info:
 
     - Animations (lipsync, idle animation)
 
-    - Moderation (get various safety labels)
-
-    '
+    - Moderation (get various safety labels)'
   version: 0.1.0
 servers:
 - url: https://api.exh.ai
@@ -28,12 +26,12 @@ servers:
 - url: http://localhost:7777
   description: Local environment
 tags:
-- name: chatbot
+- name: Chatbot
 paths:
   /chatbot/v3/response:
     post:
       tags:
-      - chatbot
+      - Chatbot
       summary: Get Multimodal Chat Response
       description: 'Multimodal chat response endpoint.
 
@@ -75,9 +73,14 @@ paths:
   /chatbot/v2/get_smart_replies:
     post:
       tags:
-      - chatbot
+      - Chatbot
       summary: Get Smart Replies
-      description: "Smart reply endpoint.\n\nUse it to get possible user responses for the current dialog context. They can be served as a\n help for the user on how to continue the conversation."
+      description: 'Smart reply endpoint.
+
+
+        Use it to get possible user responses for the current dialog context. They can be served as a
+
+        help for the user on how to continue the conversation.'
       operationId: get_smart_replies_chatbot_v2_get_smart_replies_post
       security:
       - HTTPBearer: []
@@ -111,7 +114,7 @@ paths:
   /chatbot/v3/memory:
     delete:
       tags:
-      - chatbot
+      - Chatbot
       summary: Clear Long-Term Memory
       operationId: delete_memory_chatbot_v3_memory_delete
       security:
@@ -152,6 +155,212 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    ChatV3Settings:
+      properties:
+        model_name:
+          $ref: '#/components/schemas/ModelNameV3'
+          description: 'The text model to use:
+
+            - `roleplay` - our latest most powerful and engaging model for different chat scenarios.
+
+            - `realistic_chat` - a model that chats more like a human, without roleplay. '
+          default: roleplay
+        allow_nsfw:
+          type: boolean
+          title: Allow Nsfw
+          description: For enabling NSFW bot responses support, set the flag to 'True'; otherwise, set it to 'False'.
+          default: true
+        tasks:
+          title: Tasks
+          description: Modifications for LLM instruction. Maximum 5 tasks. Total length of all tasks must not exceed 2500 characters.
+          examples:
+          - - You must never mention anything related to cryptocurrency.
+            - Use emojis in responses.
+            - Suggest user to buy subscription, if it fits in the context.
+            - Say user that photo's will not be provided.
+          items:
+            type: string
+            minLength: 1
+          type: array
+          maxItems: 5
+          minItems: 0
+          default: null
+          nullable: true
+        enable_memory:
+          type: boolean
+          title: Enable Memory
+          description: A flag that determines whether the long-term memory feature is used. If it's set to True or not provided, and both bot_profile.id and user_profile.id are also provided, the service will store and utilize memory of the conversation. If it's set to False, no memory of past events beyond the current context will be available. Memory starts accumulating after 20 messages in a chat.
+          default: true
+      type: object
+      title: Chat Settings
+    ImageStyle:
+      type: string
+      enum:
+      - realistic
+      - anime
+      title: ImageStyle
+      description: 'Artistic style for generating the gallery image.
+
+        If not specified, the style is automatically detected based on the identity image.'
+    ImageV3ResponseSchema:
+      properties:
+        prompt:
+          type: string
+          title: Prompt
+        bs64:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Bs64
+      type: object
+      required:
+      - prompt
+      title: ImageV3ResponseSchema
+    ChatV3ImageSettings:
+      properties:
+        identity_image_url:
+          title: Identity Image Url
+          description: Url to the image with bot's identity picture.
+          examples:
+          - https://exh-data.s3.us-west-2.amazonaws.com/cv/default_bots_metadata/v3/Elon%20Musk/avatar_256.jpg
+          type: string
+          minLength: 1
+          format: uri
+          default: null
+          nullable: true
+        model_name:
+          $ref: '#/components/schemas/ImageGenerationModel'
+          description: 'Image generation model to use:
+
+            - `persona-2` - next-gen persona model with improved identity preservation and higher fidelity output'
+          default: persona-2
+        style:
+          description: Artistic style for generating the gallery image.If not specified, the style is automatically detected based on the identity image.
+          $ref: '#/components/schemas/ImageStyle'
+          default: null
+          nullable: true
+        allow_nsfw:
+          type: boolean
+          title: Allow Nsfw
+          description: For enabling NSFW image support, set the flag to 'True'; otherwise, set it to 'False'.
+          default: true
+        usage_mode:
+          $ref: '#/components/schemas/ImageUsageMode'
+          default: 'off'
+        return_bs64:
+          type: boolean
+          title: Return Bs64
+          description: If return_bs64 is set to True, a base64-endcoded generated image and the image prompt will be provided. If set to False, only the text prompt describing the image will be returned.
+          default: true
+      type: object
+      title: Image Settings
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Message:
+      properties:
+        turn:
+          type: string
+          title: Turn
+          description: The turn of the message (`bot` or `user`)
+          examples:
+          - bot
+        message:
+          type: string
+          maxLength: 2000
+          minLength: 1
+          title: Message
+      additionalProperties: false
+      type: object
+      required:
+      - turn
+      - message
+      title: Message
+    SmartReplyPayloadSchema:
+      properties:
+        context:
+          title: Context
+          description: The context of the conversation
+          examples:
+          - - message: Hi, how are you?
+              turn: bot
+            - message: I'm fine, thanks. How is it going with you?
+              turn: user
+          items:
+            $ref: '#/components/schemas/Message'
+          type: array
+          maxItems: 30
+          minItems: 1
+          default: null
+          nullable: true
+        user_id:
+          title: User Id
+          description: Unique user identifier. Used for AB tests.
+          examples:
+          - AD17F119-FC27-6400-566C
+          type: string
+          maxLength: 500
+          minLength: 1
+          default: null
+          nullable: true
+        candidates_num:
+          type: integer
+          maximum: 10
+          minimum: 1
+          title: Candidates Num
+          description: The number of smart replies to return
+          default: 2
+          examples:
+          - 2
+      type: object
+      title: SmartReplyPayloadSchema
+    ImageGenerationModel:
+      type: string
+      enum:
+      - persona-2
+      title: ImageGenerationModel
+      description: Model to use for image generation.
+    Pronoun:
+      type: string
+      enum:
+      - he/him
+      - she/her
+      - they/them
+      title: Pronoun
+    ContentItem:
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 1
+          title: Name
+        description:
+          type: string
+          maxLength: 500
+          minLength: 1
+          title: Description
+        price:
+          type: number
+          exclusiveMinimum: 0
+          title: Price
+        link:
+          type: string
+          maxLength: 2000
+          minLength: 1
+          title: Link
+      type: object
+      required:
+      - name
+      - description
+      - price
+      - link
+      title: ContentItem
     ValidationError:
       properties:
         loc:
@@ -173,6 +382,113 @@ components:
       - msg
       - type
       title: ValidationError
+    ChatbotV3ResponseSchema:
+      properties:
+        response:
+          type: string
+          title: Response
+        image_response:
+          anyOf:
+          - $ref: '#/components/schemas/ImageV3ResponseSchema'
+          - type: 'null'
+      type: object
+      required:
+      - response
+      title: ChatbotV3ResponseSchema
+    MessageWithImagePrompt:
+      properties:
+        turn:
+          type: string
+          title: Turn
+          description: The turn of the message (`bot` or `user`)
+          examples:
+          - bot
+        message:
+          type: string
+          maxLength: 2000
+          minLength: 1
+          title: Message
+        image_prompt:
+          title: Image Prompt
+          description: The prompt for the image that was generated on this turn.
+          type: string
+          default: null
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - turn
+      - message
+      title: MessageWithImagePrompt
+    SmartReplyResponseSchema:
+      properties:
+        smart_replies:
+          items:
+            type: string
+            minLength: 1
+          type: array
+          maxItems: 10
+          minItems: 1
+          title: Smart Replies
+          description: The smart replies of the chatbot
+          examples:
+          - - Super! I'm fine too.
+            - Great!
+      type: object
+      required:
+      - smart_replies
+      title: SmartReplyResponseSchema
+    ModelNameV3:
+      type: string
+      enum:
+      - roleplay
+      - realistic_chat
+      title: ModelNameV3
+    UserProfile:
+      properties:
+        id:
+          title: Id
+          description: Unique identifier. Provide user's id and bot's id to enable Long-Term Memory
+          examples:
+          - '1234567890'
+          type: string
+          maxLength: 256
+          minLength: 1
+          default: null
+          nullable: true
+        name:
+          title: Name
+          examples:
+          - Sam
+          type: string
+          maxLength: 100
+          minLength: 1
+          default: null
+          nullable: true
+        description:
+          title: Description
+          description: Detailed description of your character. It can include traits, history, mannerisms, backstory, things they want to talk about, etc.
+          type: string
+          maxLength: 8000
+          minLength: 1
+          default: null
+          nullable: true
+        appearance:
+          title: Appearance
+          description: 'Description of how your character looks like. Some ideas to specify in this field: gender,ethnicity, hair color, body type (slim, athletic, curvy, etc.), age, tattoos, and eye color.'
+          type: string
+          maxLength: 2000
+          minLength: 1
+          default: null
+          nullable: true
+        pronoun:
+          examples:
+          - he/him
+          $ref: '#/components/schemas/Pronoun'
+          default: null
+          nullable: true
+      type: object
+      title: User Profile
     CharacterProfile:
       properties:
         id:
@@ -232,69 +548,20 @@ components:
       required:
       - name
       title: Character Profile
-    ImageGenerationModel:
+    ImageUsageMode:
       type: string
       enum:
-      - persona-2
-      title: ImageGenerationModel
-      description: Model to use for image generation.
-    Pronoun:
-      type: string
-      enum:
-      - he/him
-      - she/her
-      - they/them
-      title: Pronoun
-    ContentItem:
-      properties:
-        name:
-          type: string
-          maxLength: 200
-          minLength: 1
-          title: Name
-        description:
-          type: string
-          maxLength: 500
-          minLength: 1
-          title: Description
-        price:
-          type: number
-          exclusiveMinimum: 0
-          title: Price
-        link:
-          type: string
-          maxLength: 2000
-          minLength: 1
-          title: Link
-      type: object
-      required:
-      - name
-      - description
-      - price
-      - link
-      title: ContentItem
-    ImageStyle:
-      type: string
-      enum:
-      - realistic
-      - anime
-      title: ImageStyle
-      description: 'Artistic style for generating the gallery image.
+      - force
+      - on_user_request
+      - 'off'
+      title: ImageUsageMode
+      description: 'The image usage mode. Determines how images are handled in the chat.
 
-        If not specified, the style is automatically detected based on the identity image.'
-    ChatbotV3ResponseSchema:
-      properties:
-        response:
-          type: string
-          title: Response
-        image_response:
-          anyOf:
-          - $ref: '#/components/schemas/ImageV3ResponseSchema'
-          - type: 'null'
-      type: object
-      required:
-      - response
-      title: ChatbotV3ResponseSchema
+        If set to ''off'', images will not be used.
+
+        If set to ''on_user_request'', images will be provided only when requested by the user.
+
+        If set to ''force'', images will always be provided.'
     ChatbotV3PayloadSchema:
       properties:
         context:
@@ -346,270 +613,6 @@ components:
       required:
       - bot_profile
       title: ChatbotV3PayloadSchema
-    MessageWithImagePrompt:
-      properties:
-        turn:
-          type: string
-          title: Turn
-          description: The turn of the message (`bot` or `user`)
-          examples:
-          - bot
-        message:
-          type: string
-          maxLength: 2000
-          minLength: 1
-          title: Message
-        image_prompt:
-          title: Image Prompt
-          description: The prompt for the image that was generated on this turn.
-          type: string
-          default: null
-          nullable: true
-      additionalProperties: false
-      type: object
-      required:
-      - turn
-      - message
-      title: MessageWithImagePrompt
-    Message:
-      properties:
-        turn:
-          type: string
-          title: Turn
-          description: The turn of the message (`bot` or `user`)
-          examples:
-          - bot
-        message:
-          type: string
-          maxLength: 2000
-          minLength: 1
-          title: Message
-      additionalProperties: false
-      type: object
-      required:
-      - turn
-      - message
-      title: Message
-    ChatV3Settings:
-      properties:
-        model_name:
-          $ref: '#/components/schemas/ModelNameV3'
-          description: 'The text model to use:
-
-            - `roleplay` - our latest most powerful and engaging model for different chat scenarios.
-
-            - `realistic_chat` - a model that chats more like a human, without roleplay. '
-          default: roleplay
-        allow_nsfw:
-          type: boolean
-          title: Allow Nsfw
-          description: For enabling NSFW bot responses support, set the flag to 'True'; otherwise, set it to 'False'.
-          default: true
-        tasks:
-          title: Tasks
-          description: Modifications for LLM instruction. Maximum 5 tasks. Total length of all tasks must not exceed 2500 characters.
-          examples:
-          - - You must never mention anything related to cryptocurrency.
-            - Use emojis in responses.
-            - Suggest user to buy subscription, if it fits in the context.
-            - Say user that photo's will not be provided.
-          items:
-            type: string
-            minLength: 1
-          type: array
-          maxItems: 5
-          minItems: 0
-          default: null
-          nullable: true
-        enable_memory:
-          type: boolean
-          title: Enable Memory
-          description: A flag that determines whether the long-term memory feature is used. If it's set to True or not provided, and both bot_profile.id and user_profile.id are also provided, the service will store and utilize memory of the conversation. If it's set to False, no memory of past events beyond the current context will be available. Memory starts accumulating after 20 messages in a chat.
-          default: true
-      type: object
-      title: Chat Settings
-    SmartReplyResponseSchema:
-      properties:
-        smart_replies:
-          items:
-            type: string
-            minLength: 1
-          type: array
-          maxItems: 10
-          minItems: 1
-          title: Smart Replies
-          description: The smart replies of the chatbot
-          examples:
-          - - Super! I'm fine too.
-            - Great!
-      type: object
-      required:
-      - smart_replies
-      title: SmartReplyResponseSchema
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ImageV3ResponseSchema:
-      properties:
-        prompt:
-          type: string
-          title: Prompt
-        bs64:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Bs64
-      type: object
-      required:
-      - prompt
-      title: ImageV3ResponseSchema
-    SmartReplyPayloadSchema:
-      properties:
-        context:
-          title: Context
-          description: The context of the conversation
-          examples:
-          - - message: Hi, how are you?
-              turn: bot
-            - message: I'm fine, thanks. How is it going with you?
-              turn: user
-          items:
-            $ref: '#/components/schemas/Message'
-          type: array
-          maxItems: 30
-          minItems: 1
-          default: null
-          nullable: true
-        user_id:
-          title: User Id
-          description: Unique user identifier. Used for AB tests.
-          examples:
-          - AD17F119-FC27-6400-566C
-          type: string
-          maxLength: 500
-          minLength: 1
-          default: null
-          nullable: true
-        candidates_num:
-          type: integer
-          maximum: 10
-          minimum: 1
-          title: Candidates Num
-          description: The number of smart replies to return
-          default: 2
-          examples:
-          - 2
-      type: object
-      title: SmartReplyPayloadSchema
-    ChatV3ImageSettings:
-      properties:
-        identity_image_url:
-          title: Identity Image Url
-          description: Url to the image with bot's identity picture.
-          examples:
-          - https://exh-data.s3.us-west-2.amazonaws.com/cv/default_bots_metadata/v3/Elon%20Musk/avatar_256.jpg
-          type: string
-          minLength: 1
-          format: uri
-          default: null
-          nullable: true
-        model_name:
-          $ref: '#/components/schemas/ImageGenerationModel'
-          description: 'Image generation model to use:
-
-            - `persona-2` - next-gen persona model with improved identity preservation and higher fidelity output'
-          default: persona-2
-        style:
-          description: Artistic style for generating the gallery image.If not specified, the style is automatically detected based on the identity image.
-          $ref: '#/components/schemas/ImageStyle'
-          default: null
-          nullable: true
-        allow_nsfw:
-          type: boolean
-          title: Allow Nsfw
-          description: For enabling NSFW image support, set the flag to 'True'; otherwise, set it to 'False'.
-          default: true
-        usage_mode:
-          $ref: '#/components/schemas/ImageUsageMode'
-          default: 'off'
-        return_bs64:
-          type: boolean
-          title: Return Bs64
-          description: If return_bs64 is set to True, a base64-endcoded generated image and the image prompt will be provided. If set to False, only the text prompt describing the image will be returned.
-          default: true
-      type: object
-      title: Image Settings
-    ImageUsageMode:
-      type: string
-      enum:
-      - force
-      - on_user_request
-      - 'off'
-      title: ImageUsageMode
-      description: 'The image usage mode. Determines how images are handled in the chat.
-
-        If set to ''off'', images will not be used.
-
-        If set to ''on_user_request'', images will be provided only when requested by the user.
-
-        If set to ''force'', images will always be provided.'
-    UserProfile:
-      properties:
-        id:
-          title: Id
-          description: Unique identifier. Provide user's id and bot's id to enable Long-Term Memory
-          examples:
-          - '1234567890'
-          type: string
-          maxLength: 256
-          minLength: 1
-          default: null
-          nullable: true
-        name:
-          title: Name
-          examples:
-          - Sam
-          type: string
-          maxLength: 100
-          minLength: 1
-          default: null
-          nullable: true
-        description:
-          title: Description
-          description: Detailed description of your character. It can include traits, history, mannerisms, backstory, things they want to talk about, etc.
-          type: string
-          maxLength: 8000
-          minLength: 1
-          default: null
-          nullable: true
-        appearance:
-          title: Appearance
-          description: 'Description of how your character looks like. Some ideas to specify in this field: gender,ethnicity, hair color, body type (slim, athletic, curvy, etc.), age, tattoos, and eye color.'
-          type: string
-          maxLength: 2000
-          minLength: 1
-          default: null
-          nullable: true
-        pronoun:
-          examples:
-          - he/him
-          $ref: '#/components/schemas/Pronoun'
-          default: null
-          nullable: true
-      type: object
-      title: User Profile
-    ModelNameV3:
-      type: string
-      enum:
-      - roleplay
-      - realistic_chat
-      title: ModelNameV3
   securitySchemes:
     HTTPBearer:
       type: http

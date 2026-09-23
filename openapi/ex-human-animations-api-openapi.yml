@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Ex-Human animations API
+  title: Ex-Human Animations API
   description: '# Ex-Human
 
 
@@ -18,9 +18,7 @@ info:
 
     - Animations (lipsync, idle animation)
 
-    - Moderation (get various safety labels)
-
-    '
+    - Moderation (get various safety labels)'
   version: 0.1.0
 servers:
 - url: https://api.exh.ai
@@ -28,12 +26,12 @@ servers:
 - url: http://localhost:7777
   description: Local environment
 tags:
-- name: animations
+- name: Animations
 paths:
   /animations/v3/create_bot:
     post:
       tags:
-      - animations
+      - Animations
       summary: Create Idle Animation
       description: Takes an image as input and returns a link to a video with an animated AI Human, which is called `idle_url`.
       operationId: create_bot_v3_animations_v3_create_bot_post
@@ -69,7 +67,7 @@ paths:
   /animations/v3/generate_lipsync:
     post:
       tags:
-      - animations
+      - Animations
       summary: Get Talking Head Video from Text
       description: Generates a lip-synced video of an AI Human speaking the text.
       operationId: generate_lipsync_v3_animations_v3_generate_lipsync_post
@@ -101,7 +99,7 @@ paths:
   /animations/v3/generate_lipsync_from_audio:
     post:
       tags:
-      - animations
+      - Animations
       summary: Get Talking Head Video from Audio
       description: Generates a lip-synced video of an AI Human from mp3 or wav audio file.
       operationId: generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post
@@ -133,7 +131,7 @@ paths:
   /animations/v3/jobs:
     post:
       tags:
-      - animations
+      - Animations
       summary: Create Animation Job
       description: Generates an animation from a base64 encoded image and a prompt. Returns a task_id that can be used to poll for the animation status.
       operationId: create_animation_job_animations_v3_jobs_post
@@ -161,7 +159,7 @@ paths:
   /animations/v3/jobs/{task_id}:
     get:
       tags:
-      - animations
+      - Animations
       summary: Get Animation Job
       description: Get the current status of an animation task.
       operationId: get_animation_job_animations_v3_jobs__task_id__get
@@ -190,7 +188,7 @@ paths:
   /animations/v3/prolong_jobs:
     post:
       tags:
-      - animations
+      - Animations
       summary: Create Prolong Animation Job
       description: Prolongs an existing video using a source video URL and a prompt. Returns a task_id that can be used to poll for the animation status.
       operationId: create_prolong_animation_job_animations_v3_prolong_jobs_post
@@ -217,6 +215,63 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    FemaleVoiceName:
+      type: string
+      enum:
+      - Fiona
+      - Flora
+      - Freya
+      - Fay
+      - Felicia
+      - Franchesca
+      - Falon
+      - Faryn
+      - Frida
+      - Jenny
+      - Cleopatra
+      - Elfess
+      - Mermaid
+      - Ayra
+      - Freeza
+      - Ayumi
+      - Cardelia
+      - Islanda
+      - Seraphina
+      - Aria
+      - Joanne_11labs
+      - Sally_11labs
+      - Suzanne_11labs
+      title: FemaleVoiceName
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     AnimationTaskResponseSchema:
       properties:
         task_id:
@@ -232,7 +287,14 @@ components:
       required:
       - task_id
       title: AnimationTaskResponseSchema
-    AnimationPayloadSchema:
+    VideoGenerationStatusEnum:
+      type: string
+      enum:
+      - pending
+      - completed
+      - error
+      title: VideoGenerationStatusEnum
+    AnimationProlongPayloadSchema:
       properties:
         animation_model:
           $ref: '#/components/schemas/AnimationModel'
@@ -246,30 +308,46 @@ components:
           $ref: '#/components/schemas/AnimationDuration'
           description: Duration of the animation
           default: 5
-        image_b64:
+        video_url:
           type: string
-          title: Image B64
-          description: Base64 encoded image to animate
+          minLength: 1
+          format: uri
+          title: Video Url
+          description: URL of the source video to prolong
         prompt:
-          type: string
-          maxLength: 1000
-          minLength: 2
+          anyOf:
+          - type: string
+            maxLength: 1000
+            minLength: 2
+          - type: 'null'
           title: Prompt
-          description: Prompt for the animation
+          description: Prompt for the prolongation
       type: object
       required:
-      - image_b64
-      - prompt
-      title: AnimationPayloadSchema
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - video_url
+      title: AnimationProlongPayloadSchema
+    MaleVoiceName:
+      type: string
+      enum:
+      - Miguel
+      - Mustafa
+      - Marc
+      - Mike
+      - Max
+      - Mason
+      - Marco
+      - Mikael
+      - Myles
+      - Elon
+      - Vampire
+      - Samurai
+      - Kan
+      - Jeremy
+      - Joel
+      - Neil_11labs
+      - Markus_11labs
+      - Milo_11labs
+      title: MaleVoiceName
     AnimationStatusResponseSchema:
       properties:
         status:
@@ -291,6 +369,24 @@ components:
       required:
       - status
       title: AnimationStatusResponseSchema
+    Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post:
+      properties:
+        idle_url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Idle Url
+          description: Idle animation url (generate with /animations/v3/create_bot)
+        audio_file:
+          type: string
+          format: binary
+          title: Audio File
+          description: Audio file in mp3 or wav format with specified mime type. Max audio duration is 15 seconds. Contact support@exh.ai to request an increase.
+      type: object
+      required:
+      - idle_url
+      - audio_file
+      title: Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post
     TalkingHeadsPayloadSchema:
       properties:
         text:
@@ -337,59 +433,16 @@ components:
       - text
       - idle_url
       title: TalkingHeadsPayloadSchema
-    ValidationError:
+    Body_create_bot_v3_animations_v3_create_bot_post:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        image:
           type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          format: binary
+          title: Image
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    AnimationProlongPayloadSchema:
-      properties:
-        animation_model:
-          $ref: '#/components/schemas/AnimationModel'
-          description: 'Animation model to use:
-
-            - `aura` (480p) - animations with sound
-
-            - `aura_pro` (720p) - high-quality animations with sound'
-          default: aura
-        duration:
-          $ref: '#/components/schemas/AnimationDuration'
-          description: Duration of the animation
-          default: 5
-        video_url:
-          type: string
-          minLength: 1
-          format: uri
-          title: Video Url
-          description: URL of the source video to prolong
-        prompt:
-          anyOf:
-          - type: string
-            maxLength: 1000
-            minLength: 2
-          - type: 'null'
-          title: Prompt
-          description: Prompt for the prolongation
-      type: object
-      required:
-      - video_url
-      title: AnimationProlongPayloadSchema
+      - image
+      title: Body_create_bot_v3_animations_v3_create_bot_post
     IdleAnimationResponseSchema:
       properties:
         idle_url:
@@ -413,102 +466,47 @@ components:
       - idle_url
       - image_url
       title: IdleAnimationResponseSchema
+    AnimationPayloadSchema:
+      properties:
+        animation_model:
+          $ref: '#/components/schemas/AnimationModel'
+          description: 'Animation model to use:
+
+            - `aura` (480p) - animations with sound
+
+            - `aura_pro` (720p) - high-quality animations with sound'
+          default: aura
+        duration:
+          $ref: '#/components/schemas/AnimationDuration'
+          description: Duration of the animation
+          default: 5
+        image_b64:
+          type: string
+          title: Image B64
+          description: Base64 encoded image to animate
+        prompt:
+          type: string
+          maxLength: 1000
+          minLength: 2
+          title: Prompt
+          description: Prompt for the animation
+      type: object
+      required:
+      - image_b64
+      - prompt
+      title: AnimationPayloadSchema
     AnimationDuration:
       type: integer
       enum:
       - 5
       - 10
       title: AnimationDuration
-    Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post:
-      properties:
-        idle_url:
-          type: string
-          minLength: 1
-          format: uri
-          title: Idle Url
-          description: Idle animation url (generate with /animations/v3/create_bot)
-        audio_file:
-          type: string
-          format: binary
-          title: Audio File
-          description: Audio file in mp3 or wav format with specified mime type. Max audio duration is 15 seconds. Contact support@exh.ai to request an increase.
-      type: object
-      required:
-      - idle_url
-      - audio_file
-      title: Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post
-    VideoGenerationStatusEnum:
-      type: string
-      enum:
-      - pending
-      - completed
-      - error
-      title: VideoGenerationStatusEnum
-    Body_create_bot_v3_animations_v3_create_bot_post:
-      properties:
-        image:
-          type: string
-          format: binary
-          title: Image
-      type: object
-      required:
-      - image
-      title: Body_create_bot_v3_animations_v3_create_bot_post
     AnimationModel:
       type: string
       enum:
       - aura
       - aura_pro
       title: AnimationModel
-    FemaleVoiceName:
-      type: string
-      enum:
-      - Fiona
-      - Flora
-      - Freya
-      - Fay
-      - Felicia
-      - Franchesca
-      - Falon
-      - Faryn
-      - Frida
-      - Jenny
-      - Cleopatra
-      - Elfess
-      - Mermaid
-      - Ayra
-      - Freeza
-      - Ayumi
-      - Cardelia
-      - Islanda
-      - Seraphina
-      - Aria
-      - Joanne_11labs
-      - Sally_11labs
-      - Suzanne_11labs
-      title: FemaleVoiceName
-    MaleVoiceName:
-      type: string
-      enum:
-      - Miguel
-      - Mustafa
-      - Marc
-      - Mike
-      - Max
-      - Mason
-      - Marco
-      - Mikael
-      - Myles
-      - Elon
-      - Vampire
-      - Samurai
-      - Kan
-      - Jeremy
-      - Joel
-      - Neil_11labs
-      - Markus_11labs
-      - Milo_11labs
-      title: MaleVoiceName
   securitySchemes:
     HTTPBearer:
       type: http
