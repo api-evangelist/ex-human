@@ -49,10 +49,10 @@ tags:
 - Company
 - Artificial Intelligence
 - Conversational AI
-- AI Companions
+- AI Companion
 - Generative AI
 - Text-to-Speech
-- Image-Generation
+- Image Generation
 - Video Generation
 - Avatars
 - Multi-Modal
@@ -67,9 +67,10 @@ tags_raw:
 - Video Generation
 - Avatars
 - Multimodal
+- Image-Generation
 apis:
 - aid: ex-human:ex-human-animations-api
-  name: Ex-Human animations API
+  name: Ex-Human Animations API
   description: The animations API from Ex-Human — 6 operation(s) for animations.
   humanURL: https://docs.exh.ai/reference/getting-started-with-your-api
   baseURL: https://api.exh.ai
@@ -87,7 +88,7 @@ apis:
   - type: GettingStarted
     url: https://docs.exh.ai/reference/getting-started-with-your-api
 - aid: ex-human:ex-human-chatbot-api
-  name: Ex-Human chatbot API
+  name: Ex-Human Chatbot API
   description: The chatbot API from Ex-Human — 3 operation(s) for chatbot.
   humanURL: https://docs.exh.ai/reference/getting-started-with-your-api
   baseURL: https://api.exh.ai
@@ -110,9 +111,10 @@ apis:
   humanURL: https://docs.exh.ai/reference/getting-started-with-your-api
   baseURL: https://api.exh.ai
   tags:
-  - Image-Generation
+  - Image Generation
   tags_raw:
   - Image Generation
+  - Image-Generation
   properties:
   - type: OpenAPI
     url: openapi/ex-human-image-generation-api-openapi.yml

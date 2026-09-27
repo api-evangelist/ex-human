@@ -215,27 +215,24 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ValidationError:
+    Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        idle_url:
           type: string
-          title: Message
-        type:
+          minLength: 1
+          format: uri
+          title: Idle Url
+          description: Idle animation url (generate with /animations/v3/create_bot)
+        audio_file:
           type: string
-          title: Error Type
+          format: binary
+          title: Audio File
+          description: Audio file in mp3 or wav format with specified mime type. Max audio duration is 15 seconds. Contact support@exh.ai to request an increase.
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - idle_url
+      - audio_file
+      title: Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post
     FemaleVoiceName:
       type: string
       enum:
@@ -272,6 +269,29 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    IdleAnimationResponseSchema:
+      properties:
+        idle_url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Idle Url
+          description: This parameter provides a link to an animation featuring the bot. It is essential for generating animated responses based on text input. Also you can use this video in your application to display when your bot is waiting for requests
+          examples:
+          - https://pub-bc12eec5b78e405bb665c9b3cec6c16f.r2.dev/fb7c3aee30a5699fcc5d5e5786a6ae51.mp4
+        image_url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Image Url
+          description: This is a link to the bot's avatar. You can use it in your application as a preview image for the bot.
+          examples:
+          - https://pub-bc12eec5b78e405bb665c9b3cec6c16f.r2.dev/fb7c3aee30a5699fcc5d5e5786a6ae51.jpg
+      type: object
+      required:
+      - idle_url
+      - image_url
+      title: IdleAnimationResponseSchema
     AnimationTaskResponseSchema:
       properties:
         task_id:
@@ -287,13 +307,6 @@ components:
       required:
       - task_id
       title: AnimationTaskResponseSchema
-    VideoGenerationStatusEnum:
-      type: string
-      enum:
-      - pending
-      - completed
-      - error
-      title: VideoGenerationStatusEnum
     AnimationProlongPayloadSchema:
       properties:
         animation_model:
@@ -326,67 +339,13 @@ components:
       required:
       - video_url
       title: AnimationProlongPayloadSchema
-    MaleVoiceName:
+    VideoGenerationStatusEnum:
       type: string
       enum:
-      - Miguel
-      - Mustafa
-      - Marc
-      - Mike
-      - Max
-      - Mason
-      - Marco
-      - Mikael
-      - Myles
-      - Elon
-      - Vampire
-      - Samurai
-      - Kan
-      - Jeremy
-      - Joel
-      - Neil_11labs
-      - Markus_11labs
-      - Milo_11labs
-      title: MaleVoiceName
-    AnimationStatusResponseSchema:
-      properties:
-        status:
-          $ref: '#/components/schemas/VideoGenerationStatusEnum'
-          description: Current status of the animation task
-        video_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Video Url
-          description: URL to the generated animation video (if completed)
-        error_message:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Message
-          description: Error message (if failed)
-      type: object
-      required:
-      - status
-      title: AnimationStatusResponseSchema
-    Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post:
-      properties:
-        idle_url:
-          type: string
-          minLength: 1
-          format: uri
-          title: Idle Url
-          description: Idle animation url (generate with /animations/v3/create_bot)
-        audio_file:
-          type: string
-          format: binary
-          title: Audio File
-          description: Audio file in mp3 or wav format with specified mime type. Max audio duration is 15 seconds. Contact support@exh.ai to request an increase.
-      type: object
-      required:
-      - idle_url
-      - audio_file
-      title: Body_generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post
+      - pending
+      - completed
+      - error
+      title: VideoGenerationStatusEnum
     TalkingHeadsPayloadSchema:
       properties:
         text:
@@ -433,39 +392,61 @@ components:
       - text
       - idle_url
       title: TalkingHeadsPayloadSchema
-    Body_create_bot_v3_animations_v3_create_bot_post:
+    ValidationError:
       properties:
-        image:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          format: binary
-          title: Image
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - image
-      title: Body_create_bot_v3_animations_v3_create_bot_post
-    IdleAnimationResponseSchema:
-      properties:
-        idle_url:
-          type: string
-          minLength: 1
-          format: uri
-          title: Idle Url
-          description: This parameter provides a link to an animation featuring the bot. It is essential for generating animated responses based on text input. Also you can use this video in your application to display when your bot is waiting for requests
-          examples:
-          - https://pub-bc12eec5b78e405bb665c9b3cec6c16f.r2.dev/fb7c3aee30a5699fcc5d5e5786a6ae51.mp4
-        image_url:
-          type: string
-          minLength: 1
-          format: uri
-          title: Image Url
-          description: This is a link to the bot's avatar. You can use it in your application as a preview image for the bot.
-          examples:
-          - https://pub-bc12eec5b78e405bb665c9b3cec6c16f.r2.dev/fb7c3aee30a5699fcc5d5e5786a6ae51.jpg
-      type: object
-      required:
-      - idle_url
-      - image_url
-      title: IdleAnimationResponseSchema
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AnimationModel:
+      type: string
+      enum:
+      - aura
+      - aura_pro
+      title: AnimationModel
+    AnimationDuration:
+      type: integer
+      enum:
+      - 5
+      - 10
+      title: AnimationDuration
+    MaleVoiceName:
+      type: string
+      enum:
+      - Miguel
+      - Mustafa
+      - Marc
+      - Mike
+      - Max
+      - Mason
+      - Marco
+      - Mikael
+      - Myles
+      - Elon
+      - Vampire
+      - Samurai
+      - Kan
+      - Jeremy
+      - Joel
+      - Neil_11labs
+      - Markus_11labs
+      - Milo_11labs
+      title: MaleVoiceName
     AnimationPayloadSchema:
       properties:
         animation_model:
@@ -495,18 +476,37 @@ components:
       - image_b64
       - prompt
       title: AnimationPayloadSchema
-    AnimationDuration:
-      type: integer
-      enum:
-      - 5
-      - 10
-      title: AnimationDuration
-    AnimationModel:
-      type: string
-      enum:
-      - aura
-      - aura_pro
-      title: AnimationModel
+    Body_create_bot_v3_animations_v3_create_bot_post:
+      properties:
+        image:
+          type: string
+          format: binary
+          title: Image
+      type: object
+      required:
+      - image
+      title: Body_create_bot_v3_animations_v3_create_bot_post
+    AnimationStatusResponseSchema:
+      properties:
+        status:
+          $ref: '#/components/schemas/VideoGenerationStatusEnum'
+          description: Current status of the animation task
+        video_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Video Url
+          description: URL to the generated animation video (if completed)
+        error_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Message
+          description: Error message (if failed)
+      type: object
+      required:
+      - status
+      title: AnimationStatusResponseSchema
   securitySchemes:
     HTTPBearer:
       type: http
