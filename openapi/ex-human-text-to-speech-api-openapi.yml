@@ -62,15 +62,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     TTSPayloadSchema:
       properties:
         text:
@@ -93,21 +84,6 @@ components:
       required:
       - text
       title: TTSPayloadSchema
-    TTSMaleVoiceName:
-      type: string
-      enum:
-      - Dale
-      - Arthur
-      - Ethan
-      - Bill
-      - Brent
-      - Daniel
-      - Chad
-      - Evan
-      - Colin
-      - Alan
-      - Andreessen
-      title: Male Voice Name
     ValidationError:
       properties:
         loc:
@@ -143,6 +119,30 @@ components:
       - Dana
       - Brenda
       title: Female Voice Name
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TTSMaleVoiceName:
+      type: string
+      enum:
+      - Dale
+      - Arthur
+      - Ethan
+      - Bill
+      - Brent
+      - Daniel
+      - Chad
+      - Evan
+      - Colin
+      - Alan
+      - Andreessen
+      title: Male Voice Name
   securitySchemes:
     HTTPBearer:
       type: http
