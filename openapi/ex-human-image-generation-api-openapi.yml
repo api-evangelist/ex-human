@@ -114,6 +114,34 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    NSFWPolicyAvatar:
+      type: string
+      enum:
+      - filter
+      - allow
+      title: NSFWPolicyAvatar
+      description: Policy for handling NSFW results. When NSFW images are filtered - an error with code 535 is returned.
+    AvatarRequestSchema:
+      properties:
+        prompt:
+          type: string
+          title: Prompt
+          description: Character description to generate avatar with.
+          examples:
+          - cyber woman with pink hair and tattoos
+        nsfw_policy:
+          $ref: '#/components/schemas/NSFWPolicyAvatar'
+          default: filter
+      type: object
+      required:
+      - prompt
+      title: AvatarRequestSchema
+    ImageGenerationModel:
+      type: string
+      enum:
+      - persona-2
+      title: ImageGenerationModel
+      description: Model to use for image generation.
     GalleryImageResponseSchema:
       properties:
         image_b64:
@@ -129,27 +157,6 @@ components:
       - image_b64
       - contains_nsfw
       title: GalleryImageResponseSchema
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     GalleryImageRequestSchema:
       properties:
         identity_image_b64:
@@ -191,15 +198,6 @@ components:
       required:
       - image_b64
       title: AvatarResponseSchema
-    ImageStyle:
-      type: string
-      enum:
-      - realistic
-      - anime
-      title: ImageStyle
-      description: 'Artistic style for generating the gallery image.
-
-        If not specified, the style is automatically detected based on the identity image.'
     NSFWPolicy:
       type: string
       enum:
@@ -207,12 +205,6 @@ components:
       - allow
       title: NSFWPolicy
       description: Policy for handling NSFW content.
-    ImageGenerationModel:
-      type: string
-      enum:
-      - persona-2
-      title: ImageGenerationModel
-      description: Model to use for image generation.
     HTTPValidationError:
       properties:
         detail:
@@ -222,28 +214,36 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    AvatarRequestSchema:
-      properties:
-        prompt:
-          type: string
-          title: Prompt
-          description: Character description to generate avatar with.
-          examples:
-          - cyber woman with pink hair and tattoos
-        nsfw_policy:
-          $ref: '#/components/schemas/NSFWPolicyAvatar'
-          default: filter
-      type: object
-      required:
-      - prompt
-      title: AvatarRequestSchema
-    NSFWPolicyAvatar:
+    ImageStyle:
       type: string
       enum:
-      - filter
-      - allow
-      title: NSFWPolicyAvatar
-      description: Policy for handling NSFW results. When NSFW images are filtered - an error with code 535 is returned.
+      - realistic
+      - anime
+      title: ImageStyle
+      description: 'Artistic style for generating the gallery image.
+
+        If not specified, the style is automatically detected based on the identity image.'
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http
