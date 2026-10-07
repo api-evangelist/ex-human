@@ -146,6 +146,8 @@ apis:
   - type: GettingStarted
     url: https://docs.exh.ai/reference/getting-started-with-your-api
 common:
+- type: Plans
+  url: plans/ex-human-plans-pricing.yml
 - type: Website
   url: https://www.exh.ai/
 - type: Overlay
