@@ -1,0 +1,71 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://exh.ai/#pricing
+sources:
+- https://exh.ai/#pricing
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T104522
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: tiered-subscription
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-07'
+published: true
+note: Landing page with pricing section; monthly tiers with included response/image quotas. Enterprise
+  is quote-based.
+plan_count: 3
+currency: USD
+plans:
+- name: Free
+  price_text: $0.00/mo
+  price: 0
+  currency: USD
+  period: month
+  included_quota: 100 Talking Head Responses*, 100 Chatbot Responses*, 100 Image Generations*
+- name: Pro
+  price_text: $49.00/mo
+  price: 49
+  currency: USD
+  period: month
+  included_quota: API integration, 1,000 Talking Head Responses*, 1,000 Chatbot Responses*, 1,000 Image
+    Generations*
+- name: Enterprise
+  price_text: Ask us
+  period: none
+  included_quota: The limits your business needs, Stable high load support, Personal technical support,
+    API integration
+rate_limit_statements:
+- '* – per 1 month'
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: Free
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Pro
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none

@@ -1,67 +1,20 @@
-generated: '2026-07-19'
+generated: '2026-09-23'
 method: generated
-source: openapi/ex-human-openapi.yml
+source: openapi/ex-human-animations-api-openapi.yml, openapi/ex-human-chatbot-api-openapi.yml,
+  openapi/ex-human-image-generation-api-openapi.yml, openapi/ex-human-text-to-speech-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 12
   by_action_class:
-    acting: 11
-    connected: 1
+    acting: 7
+    connected: 5
   by_consequence:
-    write: 11
-    read: 1
+    write: 7
+    read: 5
   human_in_the_loop_required: 0
 operations:
-- path: /chatbot/v3/response
-  method: post
-  operationId: get_response_chatbot_v3_response_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /chatbot/v2/get_smart_replies
-  method: post
-  operationId: get_smart_replies_chatbot_v2_get_smart_replies_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /chatbot/v3/memory
-  method: delete
-  operationId: delete_memory_chatbot_v3_memory_delete
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /animations/v3/create_bot
   method: post
   operationId: create_bot_v3_animations_v3_create_bot_post
@@ -82,34 +35,22 @@ operations:
   method: post
   operationId: generate_lipsync_v3_animations_v3_generate_lipsync_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /animations/v3/generate_lipsync_from_audio
   method: post
   operationId: generate_lipsync_from_audio_v3_animations_v3_generate_lipsync_from_audio_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /animations/v3/jobs
   method: post
   operationId: create_animation_job_animations_v3_jobs_post
@@ -152,9 +93,29 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /tts/v1/generate_speech
+- path: /chatbot/v3/response
   method: post
-  operationId: generate_speech_tts_v1_generate_speech_post
+  operationId: get_response_chatbot_v3_response_post
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /chatbot/v2/get_smart_replies
+  method: post
+  operationId: get_smart_replies_chatbot_v2_get_smart_replies_post
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /chatbot/v3/memory
+  method: delete
+  operationId: delete_memory_chatbot_v3_memory_delete
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -187,6 +148,22 @@ operations:
 - path: /image/v1/generate_avatar
   method: post
   operationId: generate_avatar_image_v1_generate_avatar_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /tts/v1/generate_speech
+  method: post
+  operationId: generate_speech_tts_v1_generate_speech_post
   x-agentic-access:
     action-class: acting
     consequence: write
