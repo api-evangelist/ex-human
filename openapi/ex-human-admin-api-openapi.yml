@@ -1,0 +1,449 @@
+openapi: 3.2.0
+info:
+  title: Ex-Human Admin API
+  description: '# Ex-Human
+
+
+    Ex-Human is a chatbot that can talk to you like a human.
+
+
+    Currently we host several services here:
+
+
+    - Chatbot (for B2B clients)
+
+    - Chat images manager (image generation for chats)
+
+    - Admin service (adding and deactivating B2B clients, checking stats)
+
+    - Animations (lipsync, idle animation)
+
+    - Moderation (get various safety labels)'
+  version: 0.1.0
+servers:
+- url: https://api.exh.ai
+  description: Production environment
+- url: http://localhost:7777
+  description: Local environment
+tags:
+- name: Admin
+paths:
+  /user_admin/v2/api_key/{username}:
+    get:
+      tags:
+      - Admin
+      summary: Get Api Key For Username
+      operationId: get_api_key_for_username_user_admin_v2_api_key__username__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Username
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user_admin/v2/statistics/{username}:
+    get:
+      tags:
+      - Admin
+      summary: Get Statistics
+      operationId: get_statistics_user_admin_v2_statistics__username__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Username
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - Admin
+      summary: Reset Statistics
+      operationId: reset_statistics_user_admin_v2_statistics__username__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Username
+      - name: service_name
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/ServiceName'
+      responses:
+        '200':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user_admin/v2/status/{username}:
+    get:
+      tags:
+      - Admin
+      summary: Get User Status
+      operationId: get_user_status_user_admin_v2_status__username__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Username
+      - name: product_name
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ProductName'
+          default: chatbot
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserStatusResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user_admin/v2/activate/{username}:
+    post:
+      tags:
+      - Admin
+      summary: Activate Username
+      operationId: activate_username_user_admin_v2_activate__username__post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Username
+      - name: product_name
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ProductName'
+          default: chatbot
+      - name: start_new_period
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+          title: Start New Period
+      responses:
+        '200':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user_admin/v2/deactivate/{username}:
+    post:
+      tags:
+      - Admin
+      summary: Deactivate Username
+      operationId: deactivate_username_user_admin_v2_deactivate__username__post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Username
+      - name: product_name
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ProductName'
+          default: chatbot
+      responses:
+        '200':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user_admin/v2/limits/{username}:
+    put:
+      tags:
+      - Admin
+      summary: Set Limits
+      operationId: set_limits_user_admin_v2_limits__username__put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Username
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientLimits'
+      responses:
+        '200':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+      - Admin
+      summary: Get Limits
+      operationId: get_limits_user_admin_v2_limits__username__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Username
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientLimits'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - Admin
+      summary: Delete Limits
+      operationId: delete_limits_user_admin_v2_limits__username__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Username
+      responses:
+        '200':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ClientLimits:
+      properties:
+        animation_requests:
+          anyOf:
+          - type: integer
+            maximum: 100000000.0
+            minimum: -1.0
+          - type: 'null'
+          title: Animation Requests
+          description: Number of requests to animation services per month
+        tts_requests:
+          anyOf:
+          - type: integer
+            maximum: 100000000.0
+            minimum: -1.0
+          - type: 'null'
+          title: Tts Requests
+          description: Number of requests to tts service per month
+        animation_audio_duration:
+          anyOf:
+          - type: integer
+            maximum: 75.0
+            minimum: 15.0
+          - type: 'null'
+          title: Animation Audio Duration
+          description: Max audio duration seconds in animation pipelines
+        tts_characters:
+          anyOf:
+          - type: integer
+            maximum: 1000.0
+            minimum: 400.0
+          - type: 'null'
+          title: Tts Characters
+          description: Max number of characters in tts pipelines
+        animation_characters:
+          anyOf:
+          - type: integer
+            maximum: 1500.0
+            minimum: 200.0
+          - type: 'null'
+          title: Animation Characters
+          description: Max number of characters in animation pipelines
+        chatbot_requests:
+          anyOf:
+          - type: integer
+            maximum: 100000000.0
+            minimum: -1.0
+          - type: 'null'
+          title: Chatbot Requests
+          description: Number of requests to chatbot services per month
+        image_generation_requests:
+          anyOf:
+          - type: integer
+            maximum: 100000000.0
+            minimum: -1.0
+          - type: 'null'
+          title: Image Generation Requests
+          description: Number of requests to image generation services per month
+        image_animation_requests:
+          anyOf:
+          - type: integer
+            maximum: 100000000.0
+            minimum: -1.0
+          - type: 'null'
+          title: Image Animation Requests
+          description: Number of requests to image animation services per month
+        video_prolong_requests:
+          anyOf:
+          - type: integer
+            maximum: 100000000.0
+            minimum: -1.0
+          - type: 'null'
+          title: Video Prolong Requests
+          description: Number of requests to video prolong services per month
+      type: object
+      title: ClientLimits
+    ProductName:
+      type: string
+      enum:
+      - chatbot
+      title: ProductName
+    UserStatusResponseSchema:
+      properties:
+        is_activated:
+          type: boolean
+          title: Is Activated
+          description: Is user activated
+          examples:
+          - true
+      type: object
+      required:
+      - is_activated
+      title: UserStatusResponseSchema
+    ServiceName:
+      type: string
+      enum:
+      - chatbot
+      - smart_reply
+      - reactions
+      - idle
+      - lipsync
+      - image_generation
+      - tts
+      - image_animation
+      - video_prolong
+      - recommendations
+      title: ServiceName
+    ApiKeyResponseSchema:
+      properties:
+        api_key:
+          type: string
+          title: Api Key
+          description: The API key
+          examples:
+          - a1b2c3d4e5f6g7h8i9j0
+      type: object
+      required:
+      - api_key
+      title: ApiKeyResponseSchema
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

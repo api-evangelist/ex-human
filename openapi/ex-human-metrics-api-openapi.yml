@@ -1,0 +1,48 @@
+openapi: 3.2.0
+info:
+  title: Ex-Human Metrics API
+  description: '# Ex-Human
+
+
+    Ex-Human is a chatbot that can talk to you like a human.
+
+
+    Currently we host several services here:
+
+
+    - Chatbot (for B2B clients)
+
+    - Chat images manager (image generation for chats)
+
+    - Admin service (adding and deactivating B2B clients, checking stats)
+
+    - Animations (lipsync, idle animation)
+
+    - Moderation (get various safety labels)'
+  version: 0.1.0
+servers:
+- url: https://api.exh.ai
+  description: Production environment
+- url: http://localhost:7777
+  description: Local environment
+tags:
+- name: Metrics
+paths:
+  /metrics:
+    get:
+      summary: Metrics
+      description: Endpoint that serves Prometheus metrics.
+      operationId: metrics_metrics_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Metrics
+components:
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

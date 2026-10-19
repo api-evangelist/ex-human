@@ -43,7 +43,7 @@ paths:
         required: false
         schema:
           type: string
-          default: d704788b-c5bb-4117-9619-8307b91977a1
+          default: 60fbaf59-9af2-4769-8188-9d357c7ad744
           title: X-Request-Id
       requestBody:
         required: true
@@ -62,21 +62,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    TTSMaleVoiceName:
-      type: string
-      enum:
-      - Dale
-      - Arthur
-      - Ethan
-      - Bill
-      - Brent
-      - Daniel
-      - Chad
-      - Evan
-      - Colin
-      - Alan
-      - Andreessen
-      title: Male Voice Name
     ValidationError:
       properties:
         loc:
@@ -98,29 +83,6 @@ components:
       - msg
       - type
       title: ValidationError
-    TTSFemaleVoiceName:
-      type: string
-      enum:
-      - Carolyn
-      - Betty
-      - Amelia
-      - Diana
-      - Erika
-      - Carol
-      - Amy
-      - Emily
-      - Dana
-      - Brenda
-      title: Female Voice Name
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     TTSPayloadSchema:
       properties:
         text:
@@ -143,6 +105,44 @@ components:
       required:
       - text
       title: TTSPayloadSchema
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TTSMaleVoiceName:
+      type: string
+      enum:
+      - Dale
+      - Arthur
+      - Ethan
+      - Bill
+      - Brent
+      - Daniel
+      - Chad
+      - Evan
+      - Colin
+      - Alan
+      - Andreessen
+      title: Male Voice Name
+    TTSFemaleVoiceName:
+      type: string
+      enum:
+      - Carolyn
+      - Betty
+      - Amelia
+      - Diana
+      - Erika
+      - Carol
+      - Amy
+      - Emily
+      - Dana
+      - Brenda
+      title: Female Voice Name
   securitySchemes:
     HTTPBearer:
       type: http
