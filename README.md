@@ -64,6 +64,129 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Ex-Human is a company surfaced as a portfolio company of a16z and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Ex-Human is a "Digital Human as a Service" platform that provides a single, unified API for building fully immersive, emotionally intelligent AI companions that communicate through text, voice, images, and video. Backed by a16z, the company lets developers design unique character personalities and generate multimodal responses at production scale. The Ex-Human API spans a multimodal chatbot (roleplay and realistic-chat models with long-term memory and smart replies), image generation (personalized gallery images and avatars via the persona-2 and supreme models), talking-head avatar animation (lip-sync from text or audio), image-to-video animation jobs, and text-to-speech. It is trusted by large consumer-technology companies to power AI companions, entertainment and gaming NPCs, dating experiences, AI twins, education tutors, and healthcare and therapy support at scale.
 
-Backed by: a16z
+**Areas:** Company · Artificial Intelligence · Conversational AI · AI Companion · Generative AI · Text-to-Speech · Image Generation · Video Generation · Avatars · Multi-Modal
+
+## Ex-Human on APIs.io
+
+Everything profiled for Ex-Human is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ex-human/](https://apis.io/providers/ex-human/)** — or go straight to one of the APIs or properties below.
+
+### APIs (4)
+
+- [Ex-Human Animations API](https://apis.io/apis/ex-human/ex-human-animations-api/) — The animations API from Ex-Human — 6 operation(s) for animations.
+- [Ex-Human Chatbot API](https://apis.io/apis/ex-human/ex-human-chatbot-api/) — The chatbot API from Ex-Human — 3 operation(s) for chatbot.
+- [Ex-Human Image Generation API](https://apis.io/apis/ex-human/ex-human-image-generation-api/) — The Image Generation API from Ex-Human — 2 operation(s) for image generation.
+- [Ex-Human Text to Speech API](https://apis.io/apis/ex-human/ex-human-text-to-speech-api/) — The Text to Speech API from Ex-Human — 1 operation(s) for text to speech.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [ex-human](https://apis.io/servers/ex-human/ex-human/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Ex Human Agentic Access](https://apis.io/agentic-access/ex-human/ex-human-agentic-access/)
+
+#### Collections (4)
+
+Postman and Open Collection request collections.
+
+- [Ex-Human animations API](https://apis.io/collections/ex-human/open-ex-human-animations-api/)
+- [Ex-Human animations chatbot API](https://apis.io/collections/ex-human/open-ex-human-chatbot-api/)
+- [Ex-Human animations Image Generation API](https://apis.io/collections/ex-human/open-ex-human-image-generation-api/)
+- [Ex-Human animations Text to Speech API](https://apis.io/collections/ex-human/open-ex-human-text-to-speech-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Ex Human Openapi Overlay](https://apis.io/overlays/ex-human/ex-human-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Ex Human Authentication](https://apis.io/security/ex-human/ex-human-authentication/)
+- [Ex Human Domain Security](https://apis.io/security/ex-human/ex-human-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Ex Human Plans Pricing](https://apis.io/plans/ex-human/ex-human-plans-pricing/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.exh.ai/)
+- [Documentation](https://docs.exh.ai/)
+- [Getting started](https://docs.exh.ai/reference/getting-started-with-your-api)
+- [API reference](https://docs.exh.ai/reference/get_response_chatbot_v3_response_post)
+- [Pricing](https://exh.ai/#pricing)
+- [Sign up](https://admin.exh.ai/)
+- [Changelog](https://docs.exh.ai/changelog)
+- [Blog](https://exh.ai/blog/)
+- [Terms of service](https://www.privacypolicies.com/live/6e088827-d8ce-4369-bb65-6b0bd4a23146)
+- [Privacy policy](https://www.privacypolicies.com/live/a9dd0844-8a81-48dc-bdef-f022e0ef4d4e)
+
+## API Evangelist rating
+
+**Kin Score 39.0** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 48.3 |
+| Contract governance | 4.5 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 37.5 |
+| Access clarity | 52.6 |
+
+**Agent readiness 26.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 22.7** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ex-human/](https://apis.io/providers/ex-human/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Ex-Human: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ex-human/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
